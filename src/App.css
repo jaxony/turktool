@@ -2,9 +2,32 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.ImageToLabel {
+  width: auto;
+  height: 500px;
+  user-drag: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.Instruction {
+  background-color: black;
+  color: white;
+  height: 100px;
+}
+
+.Header p {
+  padding: 15px;
+  margin: 0px;
+}
+
+.Header {
+  height: 50px;
+  background-color: #999;
+  color: black;
 }
 
 .App-header {
