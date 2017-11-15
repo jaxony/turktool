@@ -13,10 +13,10 @@ export default class LabelView extends Component {
     this.state = {
       isDrawing: false,
       currentBoxId: 0,
-      startX: null,
-      startY: null,
-      endX: null,
-      endY: null
+      x0: null,
+      y0: null,
+      x1: null,
+      y1: null
     };
     this.mouseDownHandler = this.mouseDownHandler.bind(this);
     this.mouseUpHandler = this.mouseUpHandler.bind(this);
@@ -47,15 +47,17 @@ export default class LabelView extends Component {
   createRectangle(event) {
     this.setState(prevState => ({
       isDrawing: true,
-      startX: event.pageX,
-      startY: event.pageY
+      x0: event.pageX,
+      y0: event.pageY
     }));
   }
 
   updateRectangle(event) {
     this.setState(prevState => ({
-      endX: event.pageX,
-      endY: event.pageY
+      x0: Math.min(prevState.x0, event.pageX),
+      y0: Math.min(prevState.y0, event.pageY),
+      x1: Math.max(prevState.x1, event.pageX),
+      y1: Math.max(prevState.y1, event.pageY),
     }));
   }
 
@@ -65,7 +67,7 @@ export default class LabelView extends Component {
     // console.log("move");
     event.persist();
     this.updateRectangle(event);
-    // console.log(this.state.endX + ", " + this.state.endY);
+    // console.log(this.state.x1 + ", " + this.state.y1);
   }
 
   incrementToNextBoxId(event) {
@@ -74,14 +76,25 @@ export default class LabelView extends Component {
     }));
   }
 
+  refreshState() {
+    // set drawing back to false
+    // turn all coordinates back to null
+    this.setState({
+      isDrawing: false,
+      x0: null,
+      y0: null,
+      x1: null,
+      y1: null
+    });
+  }
+
   mouseUpHandler(event) {
     event.persist();
     // console.log("mouse up");
     // console.log(event);
-    this.updateRectangle(event);
+    this.refreshState();
     this.incrementToNextBoxId();
-    this.setState({ isDrawing: false });
-    // console.log(this.state.endX + ", " + this.state.endY);
+    // console.log(this.state.x1 + ", " + this.state.y1);
   }
 
   getCommittedBoxes() {
@@ -93,12 +106,12 @@ export default class LabelView extends Component {
     var committedBoxes = this.getCommittedBoxes();
     
     // get coords for current rectangle
-    if (this.state.startX !== null) {
+    if (this.state.x0 !== null) {
       var rectangle = {
-        x0: this.state.startX,
-        x1: this.state.endX,
-        y0: this.state.startY,
-        y1: this.state.endY
+        x0: this.state.x0,
+        x1: this.state.x1,
+        y0: this.state.y0,
+        y1: this.state.y1
       }
       committedBoxes.push(rectangle);
     }
