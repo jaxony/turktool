@@ -6,16 +6,21 @@ import BoundingBox from "./BoundingBox.js";
  * Renders `BoundingBox`s passed in through props.
  */
 export default class BoundingBoxes extends Component {
-   constructor(props) {
-     super(props);
-     this.props = props;
-   }
+  constructor(props) {
+    super(props);
+    this.props = props;
+  }
 
-   render() {
-     return (
+  render() {
+    // make BoundingBox component for each box that needs to
+    // be rendered
+    const boxesToRender = this.props.boxes.map((box, index) =>
+      <BoundingBox key={index} box={box} />
+    );
+    return (
       <div id="BoundingBoxes">
-        <BoundingBox rectangle={this.props.rectangle} />
+        {boxesToRender.length > 0 && boxesToRender}
       </div>
-     );
-   }
+    );
+  }
 }

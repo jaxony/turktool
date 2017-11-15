@@ -62,10 +62,10 @@ export default class LabelView extends Component {
   mouseMoveHandler(event) {
     // only update the state if is drawing
     if (!this.state.isDrawing) return;
-    console.log("move");
+    // console.log("move");
     event.persist();
     this.updateRectangle(event);
-    console.log(this.state.endX + ", " + this.state.endY);
+    // console.log(this.state.endX + ", " + this.state.endY);
   }
 
   incrementToNextBoxId(event) {
@@ -76,21 +76,35 @@ export default class LabelView extends Component {
 
   mouseUpHandler(event) {
     event.persist();
-    console.log("mouse up");
+    // console.log("mouse up");
     // console.log(event);
     this.updateRectangle(event);
     this.incrementToNextBoxId();
     this.setState({ isDrawing: false });
-    console.log(this.state.endX + ", " + this.state.endY);
+    // console.log(this.state.endX + ", " + this.state.endY);
+  }
+
+  getCommittedBoxes() {
+    return [];
   }
 
   render() {
-    var rectangle = {
-      x0: 10,
-      y0: 140,
-      x1: 300,
-      y1: 200
-    };
+    // TODO: get committed rectangles from Redux store
+    var committedBoxes = this.getCommittedBoxes();
+    
+    // get coords for current rectangle
+    if (this.state.startX !== null) {
+      var rectangle = {
+        x0: this.state.startX,
+        x1: this.state.endX,
+        y0: this.state.startY,
+        y1: this.state.endY
+      }
+      committedBoxes.push(rectangle);
+    }
+    
+    const numBoxesToRender = committedBoxes.length;
+    
     return (
       <div
         className="LabelView"
@@ -98,7 +112,11 @@ export default class LabelView extends Component {
         onMouseUp={this.mouseUpHandler}
         onMouseMove={this.mouseMoveHandler}
       >
-        <BoundingBoxes className="BoundingBoxes" rectangle={rectangle} />
+        {numBoxesToRender > 0 && 
+          <BoundingBoxes
+            className="BoundingBoxes"
+            boxes={committedBoxes} />
+        }
         <LabelImage className="LabelImage" imageUrl={this.props.imageUrl} />
       </div>
     );

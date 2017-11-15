@@ -7,7 +7,7 @@ export default class BoundingBox extends Component {
   }
 
   render() {
-    const { x0, y0, x1, y1 } = this.props.rectangle;
+    const { x0, y0, x1, y1 } = this.props.box;
     const style = {
       left: x0,
       top: y0,
