@@ -14,7 +14,7 @@ export default class BoundingBoxes extends Component {
    render() {
      return (
       <div id="BoundingBoxes">
-        <BoundingBox rectangle={this.props.rectangle} />;
+        <BoundingBox rectangle={this.props.rectangle} />
       </div>
      );
    }

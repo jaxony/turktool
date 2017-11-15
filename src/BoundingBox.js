@@ -13,7 +13,7 @@ export default class BoundingBox extends Component {
       top: y0,
       width: x1 - x0,
       height: y1 - y0,
-      'z-index': 999
+      zIndex: 999
     };
     return (
       <div className="BoundingBox" style={style}></div>
