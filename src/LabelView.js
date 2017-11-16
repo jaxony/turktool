@@ -13,10 +13,7 @@ export default class LabelView extends Component {
     this.state = {
       isDrawing: false,
       currentBoxId: 0,
-      x0: null,
-      y0: null,
-      x1: null,
-      y1: null
+      position: null
     };
     this.mouseDownHandler = this.mouseDownHandler.bind(this);
     this.mouseUpHandler = this.mouseUpHandler.bind(this);
@@ -47,17 +44,56 @@ export default class LabelView extends Component {
   createRectangle(event) {
     this.setState(prevState => ({
       isDrawing: true,
-      x0: event.pageX,
-      y0: event.pageY
+      position: {
+        left: event.pageX,
+        top: event.pageY,
+        width: 0,
+        height: 0
+      }
     }));
+  }
+
+  /**
+   * Calculate the start position and size of the rectangle by
+   * the mouse coordinates
+   *
+   * @param   startX
+   * @param   startY
+   * @param   endX
+   * @param   endY
+   * @returns {*}
+   */
+  calculateRectPos(startX, startY, endX, endY) {
+    var width = endX - startX;
+    var height = endY - startY;
+    var posX = startX;
+    var posY = startY;
+
+    if (width < 0) {
+      width = Math.abs(width);
+      posX -= width;
+    }
+
+    if (height < 0) {
+      height = Math.abs(height);
+      posY -= height;
+    }
+
+    return {
+      left: posX,
+      top: posY,
+      width: width,
+      height: height
+    };
   }
 
   updateRectangle(event) {
     this.setState(prevState => ({
-      x0: Math.min(prevState.x0, event.pageX),
-      y0: Math.min(prevState.y0, event.pageY),
-      x1: Math.max(prevState.x1, event.pageX),
-      y1: Math.max(prevState.y1, event.pageY),
+      position: this.calculateRectPos(
+        prevState.position.left, 
+        prevState.position.top, 
+        event.pageX, //.nativeEvent.offsetX,
+        event.pageY) //.nativeEvent.offsetY)
     }));
   }
 
@@ -66,11 +102,13 @@ export default class LabelView extends Component {
     if (!this.state.isDrawing) return;
     // console.log("move");
     event.persist();
+    // console.log(event.nativeEvent.offsetX, event.nativeEvent.offsetY);
     this.updateRectangle(event);
     // console.log(this.state.x1 + ", " + this.state.y1);
   }
 
   incrementToNextBoxId(event) {
+    console.log("New box id = " + (this.state.currentBoxId + 1));
     this.setState(prevState => ({
       currentBoxId: prevState.currentBoxId + 1
     }));
@@ -81,10 +119,7 @@ export default class LabelView extends Component {
     // turn all coordinates back to null
     this.setState({
       isDrawing: false,
-      x0: null,
-      y0: null,
-      x1: null,
-      y1: null
+      position: null
     });
   }
 
@@ -106,14 +141,11 @@ export default class LabelView extends Component {
     var committedBoxes = this.getCommittedBoxes();
     
     // get coords for current rectangle
-    if (this.state.x0 !== null) {
-      var rectangle = {
-        x0: this.state.x0,
-        x1: this.state.x1,
-        y0: this.state.y0,
-        y1: this.state.y1
-      }
-      committedBoxes.push(rectangle);
+    if (this.state.position != null) {
+      committedBoxes.push({
+        id: this.state.currentBoxId,
+        position: this.state.position
+      });
     }
     
     const numBoxesToRender = committedBoxes.length;

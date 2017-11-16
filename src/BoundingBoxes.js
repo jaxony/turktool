@@ -15,7 +15,7 @@ export default class BoundingBoxes extends Component {
     // make BoundingBox component for each box that needs to
     // be rendered
     const boxesToRender = this.props.boxes.map((box, index) =>
-      <BoundingBox key={index} box={box} />
+      <BoundingBox key={box.id} position={box.position} />
     );
     return (
       <div id="BoundingBoxes">

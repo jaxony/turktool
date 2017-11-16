@@ -12,21 +12,26 @@
 .BoundingBox {
   position: absolute;
   border: 2px solid rgba(199, 25, 9, 0.64);
+  z-index: 999;
 }
 
 #BoundingBoxes {
   position: absolute;
   width: 100%;
   height: 100%;
-  border: 1px solid rgba(0, 100, 200, 0.64);
-  z-index: 9999;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  /*border: 1px solid rgba(0, 100, 200, 0.64);
+  #z-index: 9999;*/
 }
 
 .LabelView img {
   position: absolute;
   width: auto;
   height: 100%;
-  user-drag: none;
   user-select: none;
   -webkit-user-drag: none;
   -webkit-user-select: none;
