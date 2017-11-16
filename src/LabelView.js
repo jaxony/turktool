@@ -44,56 +44,17 @@ export default class LabelView extends Component {
   createRectangle(event) {
     this.setState(prevState => ({
       isDrawing: true,
-      position: {
-        left: event.pageX,
-        top: event.pageY,
-        width: 0,
-        height: 0
-      }
+      startX: event.pageX,
+      startY: event.pageY,
+      currX: event.pageX,
+      currY: event.pageY
     }));
-  }
-
-  /**
-   * Calculate the start position and size of the rectangle by
-   * the mouse coordinates
-   *
-   * @param   startX
-   * @param   startY
-   * @param   endX
-   * @param   endY
-   * @returns {*}
-   */
-  calculateRectPos(startX, startY, endX, endY) {
-    var width = endX - startX;
-    var height = endY - startY;
-    var posX = startX;
-    var posY = startY;
-
-    if (width < 0) {
-      width = Math.abs(width);
-      posX -= width;
-    }
-
-    if (height < 0) {
-      height = Math.abs(height);
-      posY -= height;
-    }
-
-    return {
-      left: posX,
-      top: posY,
-      width: width,
-      height: height
-    };
   }
 
   updateRectangle(event) {
     this.setState(prevState => ({
-      position: this.calculateRectPos(
-        prevState.position.left, 
-        prevState.position.top, 
-        event.pageX, //.nativeEvent.offsetX,
-        event.pageY) //.nativeEvent.offsetY)
+      currX: event.pageX,
+      currY: event.pageY
     }));
   }
 
@@ -119,7 +80,10 @@ export default class LabelView extends Component {
     // turn all coordinates back to null
     this.setState({
       isDrawing: false,
-      position: null
+      startX: null,
+      startY: null,
+      currX: null,
+      currY: null
     });
   }
 
@@ -136,15 +100,28 @@ export default class LabelView extends Component {
     return [];
   }
 
+  calculateRectPosition() {
+    const left = Math.min(this.state.startX, this.state.currX);
+    const top = Math.min(this.state.startY, this.state.currY);
+    const right = Math.max(this.state.startX, this.state.currX);
+    const bottom = Math.max(this.state.startY, this.state.currY);
+    return {
+      left: left,
+      top: top,
+      width: right - left,
+      height: bottom - top
+    };
+  }
+
   render() {
     // TODO: get committed rectangles from Redux store
     var committedBoxes = this.getCommittedBoxes();
     
     // get coords for current rectangle
-    if (this.state.position != null) {
+    if (this.state.startX != null) {
       committedBoxes.push({
         id: this.state.currentBoxId,
-        position: this.state.position
+        position: this.calculateRectPosition()
       });
     }
     
