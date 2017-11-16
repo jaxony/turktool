@@ -9,57 +9,7 @@ export default class LabelView extends Component {
   constructor(props) {
     super(props);
     this.props = props;
-    this.state = {
-      isDrawing: false,
-      currentBoxId: 0,
-      position: null
-    };
-    this.mouseDownHandler = this.mouseDownHandler.bind(this);
-    this.mouseUpHandler = this.mouseUpHandler.bind(this);
-    this.mouseMoveHandler = this.mouseMoveHandler.bind(this);
     this.onImgLoad = this.onImgLoad.bind(this);
-  }
-
-  mouseDownHandler(event) {
-    event.persist();
-    // console.log("mouse down");
-    // console.log(event);
-    this.createRectangle(event);
-    // console.log(this.state);
-  }
-
-  createRectangle(event) {
-    this.setState(prevState => ({
-      isDrawing: true,
-      startX: event.pageX,
-      startY: event.pageY,
-      currX: event.pageX,
-      currY: event.pageY
-    }));
-  }
-
-  updateRectangle(event) {
-    this.setState(prevState => ({
-      currX: event.pageX,
-      currY: event.pageY
-    }));
-  }
-
-  mouseMoveHandler(event) {
-    // only update the state if is drawing
-    if (!this.state.isDrawing) return;
-    // console.log("move");
-    event.persist();
-    // console.log(event.nativeEvent.offsetX, event.nativeEvent.offsetY);
-    this.updateRectangle(event);
-    // console.log(this.state.x1 + ", " + this.state.y1);
-  }
-
-  incrementToNextBoxId(event) {
-    console.log("New box id = " + (this.state.currentBoxId + 1));
-    this.setState(prevState => ({
-      currentBoxId: prevState.currentBoxId + 1
-    }));
   }
 
   refreshState() {
@@ -74,7 +24,7 @@ export default class LabelView extends Component {
     });
   }
 
-  onImgLoad({target: img}) {
+  onImgLoad({ target: img }) {
     console.log("Image loaded");
     console.log(img.offsetHeight, img.offsetWidth);
     this.setState({
@@ -85,24 +35,15 @@ export default class LabelView extends Component {
     });
   }
 
-  mouseUpHandler(event) {
-    event.persist();
-    // console.log("mouse up");
-    // console.log(event);
-    this.refreshState();
-    this.incrementToNextBoxId();
-    // console.log(this.state.x1 + ", " + this.state.y1);
-  }
-
   getCommittedBoxes() {
     return [];
   }
 
   calculateRectPosition() {
-    var left = Math.min(this.state.startX, this.state.currX);
-    var top = Math.min(this.state.startY, this.state.currY);
-    var right = Math.max(this.state.startX, this.state.currX);
-    var bottom = Math.max(this.state.startY, this.state.currY);
+    var left = Math.min(this.props.state.startX, this.props.state.currX);
+    var top = Math.min(this.props.state.startY, this.props.state.currY);
+    var right = Math.max(this.props.state.startX, this.props.state.currX);
+    var bottom = Math.max(this.props.state.startY, this.props.state.currY);
 
     // limit rectangles to the size of the image
     left = Math.max(0, left);
@@ -123,9 +64,9 @@ export default class LabelView extends Component {
     var committedBoxes = this.getCommittedBoxes();
 
     // get coords for current rectangle
-    if (this.state.startX != null) {
+    if (this.props.state.startX != null) {
       committedBoxes.push({
-        id: this.state.currentBoxId,
+        id: this.props.state.currentBoxId,
         position: this.calculateRectPosition()
       });
     }
@@ -133,12 +74,7 @@ export default class LabelView extends Component {
     const numBoxesToRender = committedBoxes.length;
 
     return (
-      <div
-        className="LabelView"
-        onMouseDown={this.mouseDownHandler}
-        onMouseUp={this.mouseUpHandler}
-        onMouseMove={this.mouseMoveHandler}
-      >
+      <div className="LabelView">
         {numBoxesToRender > 0 && (
           <BoundingBoxes className="BoundingBoxes" boxes={committedBoxes} />
         )}
