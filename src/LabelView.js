@@ -10,6 +10,7 @@ export default class LabelView extends Component {
     super(props);
     this.props = props;
     this.onImgLoad = this.onImgLoad.bind(this);
+    this.committedBoxes = [];
   }
 
   getDocumentRelativeElementOffset(el) {
@@ -59,7 +60,7 @@ export default class LabelView extends Component {
   }
 
   getCommittedBoxes() {
-    return [];
+    return this.committedBoxes;
   }
 
   calculateRectPosition() {
@@ -84,22 +85,28 @@ export default class LabelView extends Component {
 
   render() {
     // TODO: get committed rectangles from Redux store
-    var committedBoxes = this.getCommittedBoxes();
-
+    var boxesToRender = this.committedBoxes.splice(0);
+    console.log(boxesToRender);
     // get coords for current rectangle
     if (this.props.state.startX != null) {
-      committedBoxes.push({
+      const newBox = {
         id: this.props.state.currentBoxId,
         position: this.calculateRectPosition()
-      });
+      }
+      boxesToRender.push(newBox);
+      if (!this.props.state.isDrawing) {
+        // drawing has ended, and coord is not null,
+        // so this rectangle can be committed permanently
+        this.committedBoxes.push(newBox);
+      }
     }
 
-    const numBoxesToRender = committedBoxes.length;
+    const numBoxesToRender = boxesToRender.length;
 
     return (
       <div className="LabelView">
         {numBoxesToRender > 0 && (
-          <BoundingBoxes className="BoundingBoxes" boxes={committedBoxes} />
+          <BoundingBoxes className="BoundingBoxes" boxes={boxesToRender} />
         )}
         <img
           id="LabelViewImg"

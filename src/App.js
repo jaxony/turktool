@@ -10,6 +10,7 @@ class App extends Component {
     this.props = props;
     this.state = {
       isDrawing: false,
+      commitBox: false,
       currentBoxId: 0,
       currX: null,
       currY: null
@@ -36,17 +37,11 @@ class App extends Component {
     }));
   }
 
-  incrementToNextBoxId(event) {
-    console.log("New box id = " + (this.state.currentBoxId + 1));
-    this.setState(prevState => ({
-      currentBoxId: prevState.currentBoxId + 1
-    }));
-  }
-
   refreshState() {
     // set drawing back to false
     // turn all coordinates back to null
     this.setState({
+      commitBox: true,
       isDrawing: false,
       startX: null,
       startY: null,
@@ -73,10 +68,11 @@ class App extends Component {
   }
 
   mouseUpHandler(event) {
-    event.persist();
     // console.log("App: mouse up");
-    this.refreshState();
-    this.incrementToNextBoxId();
+    this.setState(prevState => ({
+      isDrawing: false,
+      currentBoxId: prevState.currentBoxId + 1
+    }));
   }
 
   render() {
