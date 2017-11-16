@@ -12,27 +12,49 @@ export default class LabelView extends Component {
     this.onImgLoad = this.onImgLoad.bind(this);
   }
 
-  refreshState() {
-    // set drawing back to false
-    // turn all coordinates back to null
-    this.setState({
-      isDrawing: false,
-      startX: null,
-      startY: null,
-      currX: null,
-      currY: null
-    });
+  getDocumentRelativeElementOffset(el) {
+    const rootEl = this.getRootOfEl(el);
+    const { left: docLeft, top: docTop } = rootEl.getBoundingClientRect();
+
+    const {
+      left: elLeft,
+      top: elTop,
+      width: w,
+      height: h
+    } = el.getBoundingClientRect();
+
+    return {
+      x: Math.abs(docLeft) + elLeft,
+      y: Math.abs(docTop) + elTop,
+      h,
+      w
+    };
+  }
+
+  getRootOfEl(el) {
+    if (el.parentElement) {
+      return this.getRootOfEl(el.parentElement);
+    }
+    return el;
+  }
+
+  calculateOffset() {
+    // from react-cursor-position
+    const { x, y, w, h } = this.getDocumentRelativeElementOffset(this.el);
+    this.elementOffset = { x, y };
   }
 
   onImgLoad({ target: img }) {
     console.log("Image loaded");
-    console.log(img.offsetHeight, img.offsetWidth);
+    // console.log(img.offsetHeight, img.offsetWidth);
     this.setState({
       img: {
         height: img.offsetHeight - 3,
         width: img.offsetWidth - 3
       }
     });
+
+    this.calculateOffset();
   }
 
   getCommittedBoxes() {
@@ -46,14 +68,14 @@ export default class LabelView extends Component {
     var bottom = Math.max(this.props.state.startY, this.props.state.currY);
 
     // limit rectangles to the size of the image
-    left = Math.max(0, left);
-    top = Math.max(0, top);
-    right = Math.min(this.state.img.width, right);
-    bottom = Math.min(this.state.img.height, bottom);
+    left = Math.max(this.elementOffset.x, left);
+    top = Math.max(this.elementOffset.y, top);
+    right = Math.min(this.state.img.width + this.elementOffset.x, right);
+    bottom = Math.min(this.state.img.height + this.elementOffset.y, bottom);
 
     return {
-      left: left,
-      top: top,
+      left: left - this.elementOffset.x,
+      top: top - this.elementOffset.y,
       width: right - left,
       height: bottom - top
     };
@@ -83,6 +105,7 @@ export default class LabelView extends Component {
           src={this.props.imageUrl}
           alt=""
           onLoad={this.onImgLoad}
+          ref={(el) => this.el = el}
         />
       </div>
     );

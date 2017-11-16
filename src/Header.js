@@ -7,15 +7,11 @@ export default class Header extends Component {
     this.props = props;
   }
 
-  header() {
+  render() {
     return (
       <div className="Header">
         <Instruction text={this.props.instruction} />
       </div>
     );
-  }
-
-  render() {
-    return this.header();
   }
 }

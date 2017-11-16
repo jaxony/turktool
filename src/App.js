@@ -67,14 +67,14 @@ class App extends Component {
   mouseMoveHandler(event) {
     // only update the state if is drawing
     if (!this.state.isDrawing) return;
-    console.log("App: move");
+    // console.log("App: move");
     event.persist();
     this.updateRectangle(event);
   }
 
   mouseUpHandler(event) {
     event.persist();
-    console.log("App: mouse up");
+    // console.log("App: mouse up");
     this.refreshState();
     this.incrementToNextBoxId();
   }
@@ -87,6 +87,7 @@ class App extends Component {
         onMouseUp={this.mouseUpHandler}
         onMouseMove={this.mouseMoveHandler}
       >
+        <Header instruction="Draw stuff!" />
         <LabelView imageUrl={require("./checkmate.jpg")} state={this.state} />
       </div>
     );

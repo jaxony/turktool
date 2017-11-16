@@ -7,10 +7,8 @@ export default class BoundingBox extends Component {
   }
 
   render() {
-    var style = this.props.position;
-    // style['zIndex'] = 999;
     return (
-      <div className="BoundingBox" style={style}></div>
+      <div className="BoundingBox" style={this.props.position} />
     );
   }
 }
