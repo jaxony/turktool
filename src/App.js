@@ -7,7 +7,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header instruction="Draw bounding boxes around every chess piece." />
+        
         <LabelView imageUrl={require("./checkmate.jpg")} />
       </div>
     );
