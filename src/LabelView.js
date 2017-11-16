@@ -40,6 +40,7 @@ export default class LabelView extends Component {
 
   calculateOffset() {
     // from react-cursor-position
+    // https://github.com/ethanselzer/react-cursor-position/blob/master/src/ReactCursorPosition.js
     const { x, y, w, h } = this.getDocumentRelativeElementOffset(this.el);
     this.elementOffset = { x, y };
   }
