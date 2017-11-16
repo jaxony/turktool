@@ -56,6 +56,10 @@ class App extends Component {
   }
 
   mouseDownHandler(event) {
+    // only start drawing if the mouse was pressed
+    // down inside the image that we want labelled
+    if (event.target.id !== "LabelViewImg")
+      return;
     event.persist();
     this.createRectangle(event);
   }
