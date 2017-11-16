@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import LabelImage from "./LabelImage.js";
 import BoundingBoxes from "./BoundingBoxes.js";
 
 /**
@@ -18,6 +17,7 @@ export default class LabelView extends Component {
     this.mouseDownHandler = this.mouseDownHandler.bind(this);
     this.mouseUpHandler = this.mouseUpHandler.bind(this);
     this.mouseMoveHandler = this.mouseMoveHandler.bind(this);
+    this.onImgLoad = this.onImgLoad.bind(this);
   }
 
   /**
@@ -87,6 +87,17 @@ export default class LabelView extends Component {
     });
   }
 
+  onImgLoad({target: img}) {
+    console.log("Image loaded");
+    console.log(img.offsetHeight, img.offsetWidth);
+    this.setState({
+      img: {
+        height: img.offsetHeight - 3,
+        width: img.offsetWidth - 3
+      }
+    });
+  }
+
   mouseUpHandler(event) {
     event.persist();
     // console.log("mouse up");
@@ -101,10 +112,17 @@ export default class LabelView extends Component {
   }
 
   calculateRectPosition() {
-    const left = Math.min(this.state.startX, this.state.currX);
-    const top = Math.min(this.state.startY, this.state.currY);
-    const right = Math.max(this.state.startX, this.state.currX);
-    const bottom = Math.max(this.state.startY, this.state.currY);
+    var left = Math.min(this.state.startX, this.state.currX);
+    var top = Math.min(this.state.startY, this.state.currY);
+    var right = Math.max(this.state.startX, this.state.currX);
+    var bottom = Math.max(this.state.startY, this.state.currY);
+
+    // limit rectangles to the size of the image
+    left = Math.max(0, left);
+    top = Math.max(0, top);
+    right = Math.min(this.state.img.width, right);
+    bottom = Math.min(this.state.img.height, bottom);
+
     return {
       left: left,
       top: top,
@@ -116,7 +134,7 @@ export default class LabelView extends Component {
   render() {
     // TODO: get committed rectangles from Redux store
     var committedBoxes = this.getCommittedBoxes();
-    
+
     // get coords for current rectangle
     if (this.state.startX != null) {
       committedBoxes.push({
@@ -124,9 +142,9 @@ export default class LabelView extends Component {
         position: this.calculateRectPosition()
       });
     }
-    
+
     const numBoxesToRender = committedBoxes.length;
-    
+
     return (
       <div
         className="LabelView"
@@ -134,12 +152,15 @@ export default class LabelView extends Component {
         onMouseUp={this.mouseUpHandler}
         onMouseMove={this.mouseMoveHandler}
       >
-        {numBoxesToRender > 0 && 
-          <BoundingBoxes
-            className="BoundingBoxes"
-            boxes={committedBoxes} />
-        }
-        <LabelImage className="LabelImage" imageUrl={this.props.imageUrl} />
+        {numBoxesToRender > 0 && (
+          <BoundingBoxes className="BoundingBoxes" boxes={committedBoxes} />
+        )}
+        <img
+          id="LabelViewImg"
+          src={this.props.imageUrl}
+          alt=""
+          onLoad={this.onImgLoad}
+        />
       </div>
     );
   }

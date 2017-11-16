@@ -28,7 +28,7 @@
   #z-index: 9999;*/
 }
 
-.LabelView img {
+#LabelViewImg {
   position: absolute;
   width: auto;
   height: 100%;
