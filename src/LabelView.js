@@ -20,19 +20,6 @@ export default class LabelView extends Component {
     this.onImgLoad = this.onImgLoad.bind(this);
   }
 
-  /**
-   * Determines if a new bounding box is being drawn.
-   * If a new bbox is being drawn, increment the bbox id to
-   * a new id.
-   * 
-   * @param {boolean} isDrawing whether a bbox is currently being drawn
-   * @param {int} lastBoxId id of last bounding box being drawn
-   */
-  updateCurrentBoxId(isDrawing, lastBoxId) {
-    if (isDrawing) return lastBoxId;
-    return lastBoxId + 1;
-  }
-
   mouseDownHandler(event) {
     event.persist();
     // console.log("mouse down");
