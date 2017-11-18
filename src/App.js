@@ -74,7 +74,9 @@ class App extends Component {
     // console.log("App: mouse up");
     this.setState(prevState => ({
       isDrawing: false,
-      currentBoxId: prevState.currentBoxId + 1
+      currentBoxId: prevState.isDrawing
+        ? prevState.currentBoxId + 1 // was drawing
+        : prevState.currentBoxId // was not drawing
     }));
   }
 
