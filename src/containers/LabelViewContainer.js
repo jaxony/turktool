@@ -81,7 +81,7 @@ export default class LabelViewContainer extends Component {
   render() {
     return (
       <div
-        id="AppContainer"
+        id="LabelViewContainer"
         onMouseDown={this.mouseDownHandler}
         onMouseUp={this.mouseUpHandler}
         onMouseMove={this.mouseMoveHandler}
