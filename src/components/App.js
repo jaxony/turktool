@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Header from "./components/Header.js";
-import LabelViewContainer from "./containers/LabelViewContainer.js";
+import Header from "./Header.js";
+import LabelViewContainer from "../containers/LabelViewContainer.js";
 import "./App.css";
 
 class App extends Component {
@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <div>
         <Header instruction="Draw stuff!" />
-        <LabelViewContainer imageUrl={require("./checkmate.jpg")} />
+        <LabelViewContainer imageUrl={require("../checkmate.jpg")} />
       </div>
     );
   }
