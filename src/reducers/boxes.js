@@ -1,3 +1,5 @@
+import undoable, { distinctState } from 'redux-undo';
+
 const boxes = (state = [], action) => {
   switch (action.type) {
     // add new box to the Redux store
@@ -27,4 +29,8 @@ const boxes = (state = [], action) => {
   }
 }
 
-export default boxes
+const undoableBoxes = undoable(boxes, {
+  filter: distinctState()
+});
+
+export default undoableBoxes
