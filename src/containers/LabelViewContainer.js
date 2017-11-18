@@ -8,7 +8,6 @@ export default class LabelViewContainer extends Component {
 
     this.state = {
       isDrawing: false,
-      commitBox: false,
       currentBoxId: 0,
       currX: null,
       currY: null
@@ -39,7 +38,6 @@ export default class LabelViewContainer extends Component {
     // set drawing back to false
     // turn all coordinates back to null
     this.setState({
-      commitBox: true,
       isDrawing: false,
       startX: null,
       startY: null,
