@@ -83,10 +83,16 @@ export default class LabelView extends Component {
     };
   }
 
+  isRectangleTooSmall(position) {
+    if (position.width < 20 || position.height < 20)
+      return true;
+    return false;
+  }
+
   render() {
     // TODO: get committed rectangles from Redux store
     var boxesToRender = this.committedBoxes.splice(0);
-    console.log(boxesToRender);
+    // console.log(boxesToRender);
     // get coords for current rectangle
     if (this.props.state.startX != null) {
       const newBox = {
@@ -94,10 +100,11 @@ export default class LabelView extends Component {
         position: this.calculateRectPosition()
       }
       boxesToRender.push(newBox);
-      if (!this.props.state.isDrawing) {
+      if (!this.props.state.isDrawing && !this.isRectangleTooSmall(newBox.position)) {
         // drawing has ended, and coord is not null,
         // so this rectangle can be committed permanently
-        this.committedBoxes.push(newBox);
+        console.log("commit box");
+        // this.committedBoxes.push(newBox);
       }
     }
 
