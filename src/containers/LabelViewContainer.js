@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import LabelView from "../components/LabelView";
+import { addBox } from "../actions";
 
-export default class LabelViewContainer extends Component {
+class LabelViewContainer extends Component {
   constructor(props) {
     super(props);
     this.props = props;
@@ -9,12 +11,21 @@ export default class LabelViewContainer extends Component {
     this.state = {
       isDrawing: false,
       currentBoxId: 0,
+      startX: null,
+      startY: null,
       currX: null,
       currY: null
     };
     this.mouseDownHandler = this.mouseDownHandler.bind(this);
     this.mouseUpHandler = this.mouseUpHandler.bind(this);
     this.mouseMoveHandler = this.mouseMoveHandler.bind(this);
+  }
+
+  /**
+   * Fetch boxes that have been saved to the Redux store.
+   */
+  getCommittedBoxes() {
+
   }
 
   createRectangle(event) {
@@ -68,6 +79,7 @@ export default class LabelViewContainer extends Component {
 
   mouseUpHandler(event) {
     // console.log("App: mouse up");
+
     this.setState(prevState => ({
       isDrawing: false,
       currentBoxId: prevState.isDrawing
@@ -84,8 +96,17 @@ export default class LabelViewContainer extends Component {
         onMouseUp={this.mouseUpHandler}
         onMouseMove={this.mouseMoveHandler}
       >
-        <LabelView imageUrl={this.props.imageUrl} state={this.state} />
+        <LabelView imageUrl={this.props.imageUrl} tmp={this.state} />
       </div>
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    committedBoxes: state.boxes.present
+  }
+}
+
+// export default connect(mapStateToProps)(LabelView);
+export default LabelViewContainer;
