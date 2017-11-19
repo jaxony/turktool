@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
-import committedBoxes from "./boxes";
+import committedBoxes from "./committedBoxes";
 import currentBox from "./currentBox";
+import imageProps from "./imageProps";
 
 const turktoolApp = combineReducers({
-  committedBoxes,
-  currentBox
+  committedBoxes: committedBoxes,
+  currentBox: currentBox,
+  imageProps: imageProps
 })
 
 export default turktoolApp;

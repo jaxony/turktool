@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import LabelView from "../components/LabelView";
-import { startDrawing, updateDrawing, refreshDrawing } from "../actions";
+import {
+  startDrawing,
+  updateDrawing,
+  refreshDrawing,
+  addBox
+} from "../actions";
+import { calculateRectPosition, isRectangleTooSmall } from "../utils/drawing";
 
 class LabelViewContainer extends Component {
   constructor(props) {
@@ -12,13 +18,6 @@ class LabelViewContainer extends Component {
     this.mouseMoveHandler = this.mouseMoveHandler.bind(this);
     this.createRectangle = this.createRectangle.bind(this);
     this.updateRectangle = this.updateRectangle.bind(this);
-  }
-
-  /**
-   * Fetch boxes that have been saved to the Redux store.
-   */
-  getCommittedBoxes() {
-
   }
 
   createRectangle(event) {
@@ -49,7 +48,6 @@ class LabelViewContainer extends Component {
     )
       return;
     event.persist();
-    console.log("mousedown");
     this.createRectangle(event);
   }
 
@@ -61,7 +59,21 @@ class LabelViewContainer extends Component {
   }
 
   mouseUpHandler(event) {
-    // console.log("App: mouse up");
+    // console.log(this.props.imageProps);
+    const boxPosition = calculateRectPosition(
+      this.props.imageProps,
+      this.props.currentBox
+    );
+    if (this.props.currentBox.isDrawing && !isRectangleTooSmall(boxPosition)) {
+      // drawing has ended, and coord is not null,
+      // so this rectangle can be committed permanently
+      // this.props.onCommitBox(newBox.id, newBox.position);
+      this.props.commitDrawingAsBox(
+        this.props.currentBox.currentBoxId,
+        boxPosition
+      );
+      // this.committedBoxes.push(newBox);
+    }
     this.props.refreshDrawing();
   }
 
@@ -79,24 +91,28 @@ class LabelViewContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    currentBox: state.currentBox
-  }
-}
+    currentBox: state.currentBox,
+    imageProps: state.imageProps
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    startDrawing: (drawing) => {
-      dispatch(startDrawing(drawing))
+    startDrawing: drawing => {
+      dispatch(startDrawing(drawing));
     },
-    updateDrawing: (drawing) => {
-      dispatch(updateDrawing(drawing))
+    updateDrawing: drawing => {
+      dispatch(updateDrawing(drawing));
     },
     refreshDrawing: () => {
-      dispatch(refreshDrawing())
+      dispatch(refreshDrawing());
+    },
+    commitDrawingAsBox: (id, position) => {
+      dispatch(addBox(id, position));
     }
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(LabelViewContainer);

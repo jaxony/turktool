@@ -45,3 +45,13 @@ export const refreshDrawing = () => {
     type: "REFRESH_DRAWING"
   }
 }
+
+export const setImageProps = (height, width, offsetX, offsetY) => {
+  return {
+    type: "SET_IMAGE_PROPS",
+    height,
+    width,
+    offsetX,
+    offsetY
+  }
+}

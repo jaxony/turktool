@@ -35,11 +35,11 @@ const currentBox = (state = initialState, action) => {
         isDrawing: false,
         currentBoxId: state.isDrawing
           ? state.currentBoxId + 1
-          : state.currentBoxId
-        // startX: state.startX,
-        // startY: state.startY,
-        // currX: state.currX,
-        // currY: state.currY
+          : state.currentBoxId,
+        startX: null,
+        startY: null,
+        currX: null,
+        currY: null
       }
 
     default:

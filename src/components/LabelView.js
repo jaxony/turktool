@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import BoundingBox from "./BoundingBox.js";
 import BoundingBoxes from "./BoundingBoxes.js";
-import { addBox } from "../actions";
+import { setImageProps } from "../actions";
+import { calculateRectPosition } from "../utils/drawing";
 
 /**
  * `LabelView` is a container for `LabelImage` and
@@ -44,78 +46,39 @@ class LabelView extends Component {
     // from react-cursor-position
     // https://github.com/ethanselzer/react-cursor-position/blob/master/src/ReactCursorPosition.js
     const { x, y, w, h } = this.getDocumentRelativeElementOffset(this.el);
-    this.elementOffset = { x, y };
+    return { offsetX: x, offsetY: y };
   }
 
   onImgLoad({ target: img }) {
     console.log("Image loaded");
-    // console.log(img.offsetHeight, img.offsetWidth);
-    this.setState({
-      img: {
-        height: img.offsetHeight - 3,
-        width: img.offsetWidth - 3
-      }
-    });
-
-    this.calculateOffset();
-  }
-
-  getCommittedBoxes() {
-    return this.committedBoxes;
-  }
-
-  calculateRectPosition() {
-    var left = Math.min(this.props.currentBox.startX, this.props.currentBox.currX);
-    var top = Math.min(this.props.currentBox.startY, this.props.currentBox.currY);
-    var right = Math.max(this.props.currentBox.startX, this.props.currentBox.currX);
-    var bottom = Math.max(this.props.currentBox.startY, this.props.currentBox.currY);
-
-    // limit rectangles to the size of the image
-    left = Math.max(this.elementOffset.x, left);
-    top = Math.max(this.elementOffset.y, top);
-    right = Math.min(this.state.img.width + this.elementOffset.x, right);
-    bottom = Math.min(this.state.img.height + this.elementOffset.y, bottom);
-
-    return {
-      left: left - this.elementOffset.x,
-      top: top - this.elementOffset.y,
-      width: right - left,
-      height: bottom - top
-    };
-  }
-
-  isRectangleTooSmall(position) {
-    if (position.width < 20 || position.height < 20)
-      return true;
-    return false;
+    const height = img.offsetHeight - 3;
+    const width = img.offsetWidth - 3;
+    const { offsetX, offsetY } = this.calculateOffset();
+    this.props.setImageProps(height, width, offsetX, offsetY);
   }
 
   render() {
+    console.log("re-render LabelView");
     // TODO: get committed rectangles from Redux store
-    var boxesToRender = this.props.committedBoxes.slice();
-    //console.log(boxesToRender);
+    const boxes = this.props.committedBoxes;
+    var boxesToRender = Object.keys(boxes).reduce((result, key) => {
+      result.push(boxes[key]);
+      return result;
+    }, []);
 
-    // get coords for current rectangle
-    //console.log(this.props);
     if (this.props.currentBox.startX != null) {
-      const newBox = {
+      boxesToRender.push({
         id: this.props.currentBox.currentBoxId,
-        position: this.calculateRectPosition()
-      }
-      boxesToRender.push(newBox);
-      if (!this.props.currentBox.isDrawing && !this.isRectangleTooSmall(newBox.position)) {
-        // drawing has ended, and coord is not null,
-        // so this rectangle can be committed permanently
-        console.log("commit box");
-        // this.committedBoxes.push(newBox);
-      }
+        position: calculateRectPosition(
+          this.props.imageProps,
+          this.props.currentBox)
+        }
+      );
     }
-
-    const numBoxesToRender = boxesToRender.length;
 
     return (
       <div id="LabelView">
-        {numBoxesToRender > 0 && (
+        {boxesToRender.length > 0 && (
           <BoundingBoxes className="BoundingBoxes" boxes={boxesToRender} />
         )}
         <img
@@ -123,25 +86,27 @@ class LabelView extends Component {
           src={this.props.imageUrl}
           alt=""
           onLoad={this.onImgLoad}
-          ref={(el) => this.el = el}
+          ref={el => (this.el = el)}
         />
       </div>
     );
   }
 }
 
-
 const mapStateToProps = (state, ownProps) => {
   return {
     committedBoxes: state.committedBoxes.present,
-    currentBox: state.currentBox
-  }
-}
+    currentBox: state.currentBox,
+    imageProps: state.imageProps
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    onCommitBox: addBox
-  }
-}
+    setImageProps: (height, width, offsetX, offsetY) => {
+      dispatch(setImageProps(height, width, offsetX, offsetY));
+    }
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(LabelView);

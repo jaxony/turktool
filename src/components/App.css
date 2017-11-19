@@ -50,7 +50,7 @@ html, body, div {
 
 #LabelViewImg {
   position: absolute;
-  width: auto%;
+  width: auto;
   height: 100%;
   user-select: none;
   -webkit-user-drag: none;
