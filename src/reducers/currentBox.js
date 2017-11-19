@@ -12,8 +12,8 @@ const currentBox = (state = initialState, action) => {
     // add new box to the Redux store
     case "START_DRAWING":
       return {
+        ...state,
         isDrawing: true,
-        currentBoxId: state.currentBoxId,
         startX: action.state.startX,
         startY: action.state.startY,
         currX: action.state.currX,
@@ -23,10 +23,7 @@ const currentBox = (state = initialState, action) => {
     // delete an existing box from the Redux store
     case "UPDATE_DRAWING":
       return {
-        isDrawing: state.isDrawing,
-        currentBoxId: state.currentBoxId,
-        startX: state.startX,
-        startY: state.startY,
+        ...state,
         currX: action.state.currX,
         currY: action.state.currY
       }
@@ -34,14 +31,15 @@ const currentBox = (state = initialState, action) => {
     // update the position of an existing box in the Redux store
     case "REFRESH_DRAWING":
       return {
+        ...state,
         isDrawing: false,
         currentBoxId: state.isDrawing
           ? state.currentBoxId + 1
-          : state.currentBoxId,
-        startX: null,
-        startY: null,
-        currX: null,
-        currY: null
+          : state.currentBoxId
+        // startX: state.startX,
+        // startY: state.startY,
+        // currX: state.currX,
+        // currY: state.currY
       }
 
     default:

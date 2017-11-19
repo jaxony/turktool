@@ -93,10 +93,10 @@ class LabelView extends Component {
   render() {
     // TODO: get committed rectangles from Redux store
     var boxesToRender = this.props.committedBoxes.slice();
-    console.log(boxesToRender);
+    //console.log(boxesToRender);
 
     // get coords for current rectangle
-    console.log(this.props);
+    //console.log(this.props);
     if (this.props.currentBox.startX != null) {
       const newBox = {
         id: this.props.currentBox.currentBoxId,
