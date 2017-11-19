@@ -111,7 +111,7 @@ export default class LabelView extends Component {
     const numBoxesToRender = boxesToRender.length;
 
     return (
-      <div className="LabelView">
+      <div id="LabelView">
         {numBoxesToRender > 0 && (
           <BoundingBoxes className="BoundingBoxes" boxes={boxesToRender} />
         )}
