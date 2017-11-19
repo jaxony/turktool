@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { ActionCreators as UndoActionCreators } from 'redux-undo'
 import LabelView from "../components/LabelView";
 import {
   startDrawing,
@@ -16,8 +17,31 @@ class LabelViewContainer extends Component {
     this.mouseDownHandler = this.mouseDownHandler.bind(this);
     this.mouseUpHandler = this.mouseUpHandler.bind(this);
     this.mouseMoveHandler = this.mouseMoveHandler.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
     this.createRectangle = this.createRectangle.bind(this);
     this.updateRectangle = this.updateRectangle.bind(this);
+  }
+
+  componentDidMount(){
+    document.addEventListener("keydown", this.handleKeyPress);
+  }
+  componentWillUnmount(){
+    document.removeEventListener("keydown", this.handleKeyPress);
+  }
+
+  handleKeyPress(event) {
+    switch (event.keyCode) {
+      case 90:
+        console.log('You just pressed Z!');
+        if (this.props.canUndo) this.props.onUndo();
+        break;
+      case 88:
+        console.log('You just pressed X!');
+        if (this.props.canRedo) this.props.onRedo();
+        break;
+      default:
+        break;
+    }
   }
 
   createRectangle(event) {
@@ -94,7 +118,9 @@ class LabelViewContainer extends Component {
 const mapStateToProps = state => {
   return {
     currentBox: state.currentBox,
-    imageProps: state.imageProps
+    imageProps: state.imageProps,
+    canUndo: state.committedBoxes.past.length > 0,
+    canRedo: state.committedBoxes.future.length > 0
   };
 };
 
@@ -111,7 +137,9 @@ const mapDispatchToProps = dispatch => {
     },
     commitDrawingAsBox: (id, position) => {
       dispatch(addBox(id, position));
-    }
+    },
+    onUndo: () => dispatch(UndoActionCreators.undo()),
+    onRedo: () => dispatch(UndoActionCreators.redo())
   };
 };
 
