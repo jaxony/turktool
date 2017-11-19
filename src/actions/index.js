@@ -25,3 +25,23 @@ export const updateBox = (id, position) => {
     position
   }
 }
+
+export const startDrawing = (state) => {
+  return {
+    type: "START_DRAWING",
+    state
+  }
+}
+
+export const updateDrawing = (state) => {
+  return {
+    type: "UPDATE_DRAWING",
+    state
+  }
+}
+
+export const refreshDrawing = () => {
+  return {
+    type: "REFRESH_DRAWING"
+  }
+}

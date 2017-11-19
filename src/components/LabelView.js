@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import BoundingBoxes from "./BoundingBoxes.js";
-import PropTypes from 'prop-types'
+import { addBox } from "../actions";
 
 /**
  * `LabelView` is a container for `LabelImage` and
  * `BoundingBoxes` components.
  */
-export default class LabelView extends Component {
+class LabelView extends Component {
   constructor(props) {
     super(props);
     this.props = props;
@@ -64,10 +65,10 @@ export default class LabelView extends Component {
   }
 
   calculateRectPosition() {
-    var left = Math.min(this.props.tmp.startX, this.props.tmp.currX);
-    var top = Math.min(this.props.tmp.startY, this.props.tmp.currY);
-    var right = Math.max(this.props.tmp.startX, this.props.tmp.currX);
-    var bottom = Math.max(this.props.tmp.startY, this.props.tmp.currY);
+    var left = Math.min(this.props.currentBox.startX, this.props.currentBox.currX);
+    var top = Math.min(this.props.currentBox.startY, this.props.currentBox.currY);
+    var right = Math.max(this.props.currentBox.startX, this.props.currentBox.currX);
+    var bottom = Math.max(this.props.currentBox.startY, this.props.currentBox.currY);
 
     // limit rectangles to the size of the image
     left = Math.max(this.elementOffset.x, left);
@@ -91,17 +92,18 @@ export default class LabelView extends Component {
 
   render() {
     // TODO: get committed rectangles from Redux store
-    var boxesToRender = [];
+    var boxesToRender = this.props.committedBoxes.slice();
+    console.log(boxesToRender);
 
     // get coords for current rectangle
     console.log(this.props);
-    if (this.props.tmp.startX != null) {
+    if (this.props.currentBox.startX != null) {
       const newBox = {
-        id: this.props.tmp.currentBoxId,
+        id: this.props.currentBox.currentBoxId,
         position: this.calculateRectPosition()
       }
       boxesToRender.push(newBox);
-      if (!this.props.tmp.isDrawing && !this.isRectangleTooSmall(newBox.position)) {
+      if (!this.props.currentBox.isDrawing && !this.isRectangleTooSmall(newBox.position)) {
         // drawing has ended, and coord is not null,
         // so this rectangle can be committed permanently
         console.log("commit box");
@@ -128,7 +130,18 @@ export default class LabelView extends Component {
   }
 }
 
-LabelView.propTypes = {
-  tmp: PropTypes.object,
-  imageUrl: PropTypes.string
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    committedBoxes: state.committedBoxes.present,
+    currentBox: state.currentBox
+  }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onCommitBox: addBox
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LabelView);

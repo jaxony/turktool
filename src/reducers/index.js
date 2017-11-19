@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import boxes from "./boxes"
+import committedBoxes from "./boxes";
+import currentBox from "./currentBox";
 
 const turktoolApp = combineReducers({
-  boxes
+  committedBoxes,
+  currentBox
 })
 
 export default turktoolApp;

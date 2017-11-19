@@ -1,24 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import LabelView from "../components/LabelView";
-import { addBox } from "../actions";
+import { startDrawing, updateDrawing, refreshDrawing } from "../actions";
 
 class LabelViewContainer extends Component {
   constructor(props) {
     super(props);
     this.props = props;
-
-    this.state = {
-      isDrawing: false,
-      currentBoxId: 0,
-      startX: null,
-      startY: null,
-      currX: null,
-      currY: null
-    };
     this.mouseDownHandler = this.mouseDownHandler.bind(this);
     this.mouseUpHandler = this.mouseUpHandler.bind(this);
     this.mouseMoveHandler = this.mouseMoveHandler.bind(this);
+    this.createRectangle = this.createRectangle.bind(this);
+    this.updateRectangle = this.updateRectangle.bind(this);
   }
 
   /**
@@ -29,32 +22,22 @@ class LabelViewContainer extends Component {
   }
 
   createRectangle(event) {
-    this.setState(prevState => ({
+    const payload = {
       isDrawing: true,
       startX: event.pageX,
       startY: event.pageY,
       currX: event.pageX,
       currY: event.pageY
-    }));
+    };
+    this.props.startDrawing(payload);
   }
 
   updateRectangle(event) {
-    this.setState(prevState => ({
+    const payload = {
       currX: event.pageX,
       currY: event.pageY
-    }));
-  }
-
-  refreshState() {
-    // set drawing back to false
-    // turn all coordinates back to null
-    this.setState({
-      isDrawing: false,
-      startX: null,
-      startY: null,
-      currX: null,
-      currY: null
-    });
+    };
+    this.props.updateDrawing(payload);
   }
 
   mouseDownHandler(event) {
@@ -66,26 +49,20 @@ class LabelViewContainer extends Component {
     )
       return;
     event.persist();
+    console.log("mousedown");
     this.createRectangle(event);
   }
 
   mouseMoveHandler(event) {
     // only update the state if is drawing
-    if (!this.state.isDrawing) return;
-    // console.log("App: move");
+    if (!this.props.currentBox.isDrawing) return;
     event.persist();
     this.updateRectangle(event);
   }
 
   mouseUpHandler(event) {
     // console.log("App: mouse up");
-
-    this.setState(prevState => ({
-      isDrawing: false,
-      currentBoxId: prevState.isDrawing
-        ? prevState.currentBoxId + 1 // was drawing
-        : prevState.currentBoxId // was not drawing
-    }));
+    this.props.refreshDrawing();
   }
 
   render() {
@@ -96,17 +73,30 @@ class LabelViewContainer extends Component {
         onMouseUp={this.mouseUpHandler}
         onMouseMove={this.mouseMoveHandler}
       >
-        <LabelView imageUrl={this.props.imageUrl} tmp={this.state} />
+        <LabelView imageUrl={this.props.imageUrl} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
-    committedBoxes: state.boxes.present
+    currentBox: state.currentBox
   }
 }
 
-// export default connect(mapStateToProps)(LabelView);
-export default LabelViewContainer;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    startDrawing: (drawing) => {
+      dispatch(startDrawing(drawing))
+    },
+    updateDrawing: (drawing) => {
+      dispatch(updateDrawing(drawing))
+    },
+    refreshDrawing: () => {
+      dispatch(refreshDrawing())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LabelViewContainer);
