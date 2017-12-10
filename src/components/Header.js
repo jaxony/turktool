@@ -9,7 +9,7 @@ export default class Header extends Component {
 
   render() {
     return (
-      <div className="Header">
+      <div id="Header">
         <Instruction text={this.props.instruction} />
       </div>
     );

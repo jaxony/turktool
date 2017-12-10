@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import BoundingBox from "./BoundingBox.js";
 import BoundingBoxes from "./BoundingBoxes.js";
+import SubmitButton from "../components/SubmitButton.js";
 import { setImageProps } from "../actions";
 import { calculateRectPosition } from "../utils/drawing";
 
@@ -88,6 +89,7 @@ class LabelView extends Component {
           onLoad={this.onImgLoad}
           ref={el => (this.el = el)}
         />
+        <SubmitButton canSubmit={false} />
       </div>
     );
   }

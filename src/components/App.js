@@ -12,7 +12,7 @@ class App extends Component {
   render() {
     return (
       <div id="AppContainer">
-        <Header instruction="Draw stuff!" />
+        <Header />
         <LabelViewContainer imageUrl={require("../checkmate.jpg")} />
       </div>
     );

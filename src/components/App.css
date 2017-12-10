@@ -24,14 +24,13 @@ html, body, div {
   position: relative;
   top: 10%;
   left: 25%;
-  width: 500px;
-  height: 500px;
-  
+  width: 750px;
+  height: auto;
 }
 
 .BoundingBox {
   position: absolute;
-  border: 2px solid rgba(199, 25, 9, 0.64);
+  border: 3px dotted rgb(199, 25, 9);
   z-index: 999;
 }
 
@@ -49,9 +48,9 @@ html, body, div {
 }
 
 #LabelViewImg {
-  position: absolute;
-  width: auto;
-  height: 100%;
+  position: relative;
+  width: 100%;
+  height: auto;
   user-select: none;
   -webkit-user-drag: none;
   -webkit-user-select: none;
@@ -65,33 +64,47 @@ html, body, div {
   height: 100px;
 }
 
-.Header p {
+#Header p {
   padding: 15px;
   margin: 0px;
+  font-size: 25px;
+  line-height: 30px;
 }
 
-.Header {
+#Header {
+  position: absolute;
+  left: 25%;
+  width: 750px;
+  text-align: center;
   height: 50px;
-  background-color: #999;
+  /*background-color: #999;*/
   color: black;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+#Submit {
+  position: relative;
+  top: 20px;
+}
+
+#Submit form {
+  text-align: center;
+  width: 100%;
+}
+
+#submitButton {
+  position: relative;
+  background-color: #4CAF50; /* Green */
+  border: none;
   color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 100%;
+  z-index: 10000;
 }
 
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+#submitButton:hover {
+  background-color: #3a823d;
 }

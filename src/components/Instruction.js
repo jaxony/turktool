@@ -7,6 +7,11 @@ export default class Instruction extends Component {
   }
 
   render() {
-    return <p>{this.props.text}</p>;
+    return (
+      <p>
+        Draw <strong>accurate</strong> boxes around <strong>every</strong> chess piece.<br />
+        Please make sure the boxes are as <strong>tight</strong> as possible.
+      </p>
+    );
   }
 }
