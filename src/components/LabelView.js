@@ -15,6 +15,21 @@ class LabelView extends Component {
     super(props);
     this.props = props;
     this.onImgLoad = this.onImgLoad.bind(this);
+    this.setDimensions = this.setDimensions.bind(this);
+  }
+
+  /**
+   * Add event listener
+   */
+  componentDidMount() {
+    window.addEventListener("resize", this.setDimensions);
+  }
+
+  /**
+   * Remove event listener
+   */
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.setDimensions);
   }
 
   getDocumentRelativeElementOffset(el) {
@@ -52,10 +67,14 @@ class LabelView extends Component {
 
   onImgLoad({ target: img }) {
     console.log("Image loaded");
-    const height = img.offsetHeight - 3;
-    const width = img.offsetWidth - 3;
+    this.height = img.offsetHeight - 3;
+    this.width = img.offsetWidth - 3;
+    this.setDimensions();
+  }
+
+  setDimensions() {
     const { offsetX, offsetY } = this.calculateOffset();
-    this.props.setImageProps(height, width, offsetX, offsetY);
+    this.props.setImageProps(this.height, this.width, offsetX, offsetY);
   }
 
   render() {
@@ -72,9 +91,9 @@ class LabelView extends Component {
         id: this.props.currentBox.currentBoxId,
         position: calculateRectPosition(
           this.props.imageProps,
-          this.props.currentBox)
-        }
-      );
+          this.props.currentBox
+        )
+      });
     }
 
     return (
