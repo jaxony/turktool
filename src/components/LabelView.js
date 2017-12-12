@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import BoundingBox from "./BoundingBox.js";
 import BoundingBoxes from "./BoundingBoxes.js";
 import SubmitButton from "../components/SubmitButton.js";
+import Crosshair from "../components/Crosshair.js";
 import { setImageProps } from "../actions";
 import { calculateRectPosition } from "../utils/drawing";
 
@@ -99,16 +100,22 @@ class LabelView extends Component {
     return (
       <div id="LabelView">
         {boxesToRender.length > 0 && (
-          <BoundingBoxes className="BoundingBoxes" boxes={boxesToRender} />
+          <BoundingBoxes
+            className="BoundingBoxes unselectable"
+            boxes={boxesToRender}
+          />
         )}
-        <img
-          id="LabelViewImg"
-          src={this.props.imageUrl}
-          alt=""
-          onLoad={this.onImgLoad}
-          ref={el => (this.el = el)}
-        />
-        <SubmitButton canSubmit={false} />
+        <div>
+          <img
+            id="LabelViewImg"
+            className="unselectable"
+            src={this.props.imageUrl}
+            alt=""
+            onLoad={this.onImgLoad}
+            ref={el => (this.el = el)}
+          />
+          {/*<Crosshair />*/}
+        </div>
       </div>
     );
   }
