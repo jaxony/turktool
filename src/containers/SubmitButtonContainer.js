@@ -11,9 +11,10 @@ const mapStateToProps = (state, ownProps) => {
   return {
     hasAcceptedTask: HAS_ACCEPTED_ASSIGNMENT,
     hasDrawnBox: Object.keys(committedBoxes).length > 0,
-    submitTask: () => {
-      axios.post(config["server"] + '/api/boundingboxes', {
-        message: "hello"
+    submitTask: (e) => {
+      e.preventDefault();
+      axios.post(config["server"][env] + '/boundingBoxes', {
+        boundingBoxes: committedBoxes
       })
       .then(function (response) {
         console.log(response);

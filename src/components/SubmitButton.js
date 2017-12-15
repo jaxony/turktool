@@ -32,6 +32,7 @@ export default class SubmitButton extends Component {
       <div id="Submit">
         <div>
           <form name="mturkForm" method="post" action={submissionUrl}>
+          {/*<form name="mturkForm">*/}
             {inputElement}
           </form>
         </div>
