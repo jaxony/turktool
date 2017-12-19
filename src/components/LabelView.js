@@ -51,7 +51,7 @@ class LabelView extends Component {
   loadImageUrl() {
     console.log('loading');
     console.log(this.props.match.params.taskId);
-    this.backend.get("/${this.props.taskId}")
+    this.backend.get(`/${this.props.match.params.taskId}`)
       .then(res => {
         console.log(res);
         const imageUrl = res.data.imageUrl;
