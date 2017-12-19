@@ -6,6 +6,7 @@ import SubmitButton from "../components/SubmitButton.js";
 import Crosshair from "../components/Crosshair.js";
 import { setImageProps } from "../actions";
 import { calculateRectPosition } from "../utils/drawing";
+import axios from 'axios';
 
 /**
  * `LabelView` is a container for `LabelImage` and
@@ -17,6 +18,19 @@ class LabelView extends Component {
     this.props = props;
     this.onImgLoad = this.onImgLoad.bind(this);
     this.setDimensions = this.setDimensions.bind(this);
+    this.loadImageUrl = this.loadImageUrl.bind(this);
+
+    // create axios instance for API calls
+    this.backend = axios.create({
+      baseURL: 'http://localhost:3001/boxes/',
+      timeout: 1000
+    });
+
+    // initialize state
+    this.state = {
+      imgLoaded: false,
+      imgUrl: null
+    };
   }
 
   /**
@@ -24,6 +38,7 @@ class LabelView extends Component {
    */
   componentDidMount() {
     window.addEventListener("resize", this.setDimensions);
+    this.loadImageUrl();
   }
 
   /**
@@ -31,6 +46,22 @@ class LabelView extends Component {
    */
   componentWillUnmount() {
     window.removeEventListener("resize", this.setDimensions);
+  }
+
+  loadImageUrl() {
+    console.log('loading');
+    console.log(this.props.match.params.taskId);
+    this.backend.get("/${this.props.taskId}")
+      .then(res => {
+        console.log(res);
+        const imageUrl = res.data.imageUrl;
+        this.setState({
+          imageUrl: imageUrl
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   getDocumentRelativeElementOffset(el) {
@@ -109,7 +140,7 @@ class LabelView extends Component {
           <img
             id="LabelViewImg"
             className="unselectable"
-            src={this.props.imageUrl}
+            src={this.state.imageUrl}
             alt=""
             onLoad={this.onImgLoad}
             ref={el => (this.el = el)}

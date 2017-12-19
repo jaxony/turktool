@@ -9,6 +9,7 @@ import {
   addBox
 } from "../actions";
 import { calculateRectPosition, isRectangleTooSmall } from "../utils/drawing";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 class LabelViewContainer extends Component {
   constructor(props) {
@@ -109,7 +110,9 @@ class LabelViewContainer extends Component {
         onMouseUp={this.mouseUpHandler}
         onMouseMove={this.mouseMoveHandler}
       >
-        <LabelView imageUrl={this.props.imageUrl} />
+        <Router>
+          <Route path="/:taskId" component={LabelView} />
+        </Router>
       </div>
     );
   }
