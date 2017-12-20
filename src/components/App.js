@@ -14,7 +14,7 @@ class App extends Component {
     return (
       <div id="AppContainer">
         <Header />
-        <LabelViewContainer imageUrl={require("../checkmate.jpg")} />
+        <LabelViewContainer taskId={this.props.match.params.taskId} />
         <SubmitButtonContainer />
       </div>
     );

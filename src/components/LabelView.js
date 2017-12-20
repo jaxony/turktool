@@ -6,7 +6,10 @@ import SubmitButton from "../components/SubmitButton.js";
 import Crosshair from "../components/Crosshair.js";
 import { setImageProps } from "../actions";
 import { calculateRectPosition } from "../utils/drawing";
-import axios from 'axios';
+import axios from "axios";
+import { withRouter } from "react-router-dom";
+
+const queryString = require('query-string');
 
 /**
  * `LabelView` is a container for `LabelImage` and
@@ -29,7 +32,7 @@ class LabelView extends Component {
     // initialize state
     this.state = {
       imgLoaded: false,
-      imgUrl: null
+      imageUrl: null
     };
   }
 
@@ -49,9 +52,8 @@ class LabelView extends Component {
   }
 
   loadImageUrl() {
-    console.log('loading');
-    console.log(this.props.match.params.taskId);
-    this.backend.get(`/${this.props.match.params.taskId}`)
+    const parsed = queryString.parse(this.props.location.search);
+    this.backend.get(`/${this.props.taskId}?hitId=${parsed.hitId}&workerId=${parsed.workerId}&assignmentId=${parsed.assignmentId}`)
       .then(res => {
         console.log(res);
         const imageUrl = res.data.imageUrl;
@@ -168,4 +170,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LabelView);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LabelView));
