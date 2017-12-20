@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import SubmitButton from "../components/SubmitButton.js";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
+
 var config = require("../config.json");
 var env = process.env.NODE_ENV;
 
 const mapStateToProps = (state, ownProps) => {
-  const HAS_ACCEPTED_ASSIGNMENT = true;
   const committedBoxes = state.committedBoxes.present;
   return {
-    hasAcceptedTask: HAS_ACCEPTED_ASSIGNMENT,
     hasDrawnBox: Object.keys(committedBoxes).length > 0,
     submitTask: (e) => {
       e.preventDefault();
@@ -26,8 +26,8 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const SubmitButtonContainer = connect(
+const SubmitButtonContainer = withRouter(connect(
   mapStateToProps
-)(SubmitButton)
+)(SubmitButton));
 
-export default SubmitButtonContainer
+export default SubmitButtonContainer;

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 var env = process.env.NODE_ENV;
 var config = require("../config.json");
+const queryString = require('query-string');
 
 export default class SubmitButton extends Component {
   constructor(props) {
@@ -8,8 +9,13 @@ export default class SubmitButton extends Component {
     this.props = props;
   }
 
+  hasAcceptedTask(search) {
+    const parsed = queryString.parse(search);
+    return parsed.assignmentId !== "ASSIGNMENT_ID_NOT_AVAILABLE";
+  }
+
   createInputElement() {
-    if (this.props.hasAcceptedTask) {
+    if (this.hasAcceptedTask(this.props.location.search)) {
       if (this.props.hasDrawnBox) {
         const value = "Submit";
         var inputElement = <input type="submit" id="submitButton" value={value} onClick={this.props.submitTask} />;
