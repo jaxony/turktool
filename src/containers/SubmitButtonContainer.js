@@ -11,23 +11,13 @@ const mapStateToProps = (state, ownProps) => {
   const committedBoxes = state.committedBoxes.present;
   return {
     hasDrawnBox: Object.keys(committedBoxes).length > 0,
-    submitTask: (e) => {
-      e.preventDefault();
-      axios.post(config["server"][env] + '/boundingBoxes', {
-        boundingBoxes: committedBoxes
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    }
-  }
-}
+    boundingBoxes: committedBoxes,
+    taskId: ownProps.taskId
+  };
+};
 
-const SubmitButtonContainer = withRouter(connect(
-  mapStateToProps
-)(SubmitButton));
+const SubmitButtonContainer = withRouter(
+  connect(mapStateToProps)(SubmitButton)
+);
 
 export default SubmitButtonContainer;

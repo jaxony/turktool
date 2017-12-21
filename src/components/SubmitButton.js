@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from 'axios';
 var env = process.env.NODE_ENV;
 var config = require("../config.json");
 const queryString = require('query-string');
@@ -12,6 +13,24 @@ export default class SubmitButton extends Component {
   hasAcceptedTask(search) {
     const parsed = queryString.parse(search);
     return parsed.assignmentId !== "ASSIGNMENT_ID_NOT_AVAILABLE";
+  }
+
+  submitTask(e) {
+    const parsed = queryString.parse(this.props.location.search);
+    e.preventDefault();
+    axios
+      .post(`${config["server"][env]}/boxes/${this.props.taskId}`, {
+        boundingBoxes: this.props.boundingBoxes,
+        assignmentId: parsed.assignmentId,
+        workerId: parsed.workerId,
+        hitId: parsed.hitId
+      })
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   createInputElement() {
