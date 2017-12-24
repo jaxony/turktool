@@ -8,7 +8,7 @@ import { setImageProps } from "../actions";
 import { calculateRectPosition } from "../utils/drawing";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-
+const config = require('../config');
 const queryString = require('query-string');
 
 /**
@@ -25,7 +25,7 @@ class LabelView extends Component {
 
     // create axios instance for API calls
     this.backend = axios.create({
-      baseURL: 'http://localhost:3001/boxes/',
+      baseURL: config["server"][process.env.NODE_ENV] + '/boxes',
       timeout: 1000
     });
 
