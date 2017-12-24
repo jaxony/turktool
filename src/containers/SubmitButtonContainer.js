@@ -12,7 +12,9 @@ const mapStateToProps = (state, ownProps) => {
   return {
     hasDrawnBox: Object.keys(committedBoxes).length > 0,
     boundingBoxes: committedBoxes,
-    taskId: ownProps.taskId
+    taskId: ownProps.taskId,
+    imageHeight: state.imageProps.height,
+    imageWidth: state.imageProps.width
   };
 };
 
