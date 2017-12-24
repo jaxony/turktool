@@ -23,13 +23,18 @@ export function calculateRectPosition(imgProps, rawBoxCoords) {
     rawBoxCoords.startY,
     rawBoxCoords.currY
   );
+  
+  // width of div border
+  const DIV_BORDER = 6
+  const width = imgProps.width - DIV_BORDER;
+  const height = imgProps.height - DIV_BORDER;
 
   // limit rectangles to the size of the image
   // so user can't draw rectangle that spill out of image
   left = Math.max(imgProps.offsetX, left);
   top = Math.max(imgProps.offsetY, top);
-  right = Math.min(imgProps.width + imgProps.offsetX, right);
-  bottom = Math.min(imgProps.height + imgProps.offsetY, bottom);
+  right = Math.min(width + imgProps.offsetX, right);
+  bottom = Math.min(height + imgProps.offsetY, bottom);
 
   return {
     left: left - imgProps.offsetX,

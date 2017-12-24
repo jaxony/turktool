@@ -101,8 +101,8 @@ class LabelView extends Component {
 
   onImgLoad({ target: img }) {
     console.log("Image loaded");
-    this.height = img.offsetHeight - 3;
-    this.width = img.offsetWidth - 3;
+    this.height = img.offsetHeight;
+    this.width = img.offsetWidth;
     this.setDimensions();
   }
 
