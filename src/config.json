@@ -5,6 +5,6 @@
   },
   "server": {
     "production": "https://chessm8-mturk.herokuapp.com",
-    "development": "http://localhost:3001"
+    "development": "https://chessm8-mturk.herokuapp.com"
   }
 }
