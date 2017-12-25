@@ -78,7 +78,7 @@ export default class SubmitButton extends Component {
       var value = "You must ACCEPT the HIT before you can submit the results.";
       var inputElement = <input type="submit" id="submitButton" value={value} disabled />;
     }
-    return value;
+    return inputElement;
   }
 
   getSubmissionUrl() {
@@ -92,8 +92,10 @@ export default class SubmitButton extends Component {
     const inputElement = this.createInputElement();
 
     return (
-      <div id="submitButton2" onClick={this.submitTask}>
-        {inputElement}
+      <div id="Submit">
+        <form type="submit" method="POST" action={this.getSubmissionUrl()}>
+          {inputElement}
+        </form>
       </div>
     );
   }
