@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import DeleteBoxButton from "./DeleteBoxButton";
 
 export default class BoundingBox extends Component {
   constructor(props) {
@@ -8,7 +9,9 @@ export default class BoundingBox extends Component {
 
   render() {
     return (
-      <div className="BoundingBox" style={this.props.position} />
+      <div className="BoundingBox" style={this.props.position}>
+        <DeleteBoxButton />
+      </div>
     );
   }
 }

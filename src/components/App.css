@@ -36,6 +36,19 @@ html, body {
   z-index: 999;
 }
 
+.DeleteBoxButton {
+  cursor: default;
+  text-align: center;
+  font-size: 10px;
+  position: relative;
+  top: -10%;
+  left: 85%;
+  height: 12px;
+  width: 12px;
+  background-color: green;
+  z-index: 10000;
+}
+
 .unselectable {
   user-select: none;
   -webkit-user-drag: none;
@@ -94,6 +107,7 @@ html, body {
 }
 
 #submitButton {
+  cursor: pointer;
   position: relative;
   background-color: #4CAF50; /* Green */
   border: none;
