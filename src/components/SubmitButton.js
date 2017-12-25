@@ -83,7 +83,7 @@ export default class SubmitButton extends Component {
 
   getSubmissionUrl() {
     return config["submit"][env] + qs.stringify(
-      this.getNormalizedBoxes(),
+      {boundingBoxes: this.getNormalizedBoxes()},
       { addQueryPrefix: true });
   }
 
