@@ -25,7 +25,7 @@ export function calculateRectPosition(imgProps, rawBoxCoords) {
   );
   
   // width of div border
-  const DIV_BORDER = 6
+  const DIV_BORDER = 4
   const width = imgProps.width - DIV_BORDER;
   const height = imgProps.height - DIV_BORDER;
 

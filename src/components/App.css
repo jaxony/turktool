@@ -32,7 +32,7 @@ html, body {
 
 .BoundingBox {
   position: absolute;
-  border: 3px dotted rgb(199, 25, 9);
+  border: 2px solid rgba(255, 51, 0, 0.8);
   z-index: 999;
 }
 
