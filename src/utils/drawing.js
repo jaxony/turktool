@@ -50,6 +50,6 @@ export function calculateRectPosition(imgProps, rawBoxCoords) {
  * @param {Object} position Contains width and height as keys
  */
 export function isRectangleTooSmall(position) {
-  if (position.width < 20 || position.height < 20) return true;
+  if (position.width < 10 || position.height < 10) return true;
   return false;
 }
