@@ -19,7 +19,7 @@ const boxes = (state = {}, action) => {
     
     // delete an existing box from the Redux store
     case "DELETE_BOX":
-      let deleteId = action.id;
+      let deleteId = (action.id).toString();
       return Object.keys(state).reduce((result, key) => {
         if (key !== deleteId) {
           result[key] = state[key];
