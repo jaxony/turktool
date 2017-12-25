@@ -13,11 +13,11 @@ export default class SubmitButton extends Component {
     this.getSubmissionUrl = this.getSubmissionUrl.bind(this);
     this.getNormalizedBoxes = this.getNormalizedBoxes.bind(this);
     this.normalizePosition = this.normalizePosition.bind(this);
+    this.parsed = queryString.parse(this.props.location.search);
   }
 
-  hasAcceptedTask(search) {
-    const parsed = queryString.parse(search);
-    return parsed.assignmentId !== "ASSIGNMENT_ID_NOT_AVAILABLE";
+  hasAcceptedTask() {
+    return this.parsed.assignmentId !== "ASSIGNMENT_ID_NOT_AVAILABLE";
   }
 
   /*
@@ -50,7 +50,6 @@ export default class SubmitButton extends Component {
   }
 
   submitTask(e) {
-    const parsed = queryString.parse(this.props.location.search);
     // e.preventDefault();
     console.log('POSTing data');
     axios
@@ -66,7 +65,7 @@ export default class SubmitButton extends Component {
   }
 
   createInputElement() {
-    if (this.hasAcceptedTask(this.props.location.search)) {
+    if (this.hasAcceptedTask()) {
       if (this.props.hasDrawnBox) {
         var value = "Submit";
         var inputElement = <input type="submit" id="submitButton" value={value} />;
@@ -83,7 +82,10 @@ export default class SubmitButton extends Component {
 
   getSubmissionUrl() {
     return config["submit"][env] + qs.stringify(
-      {boundingBoxes: this.getNormalizedBoxes()},
+      {
+        boundingBoxes: this.getNormalizedBoxes(),
+        assignmentId: this.parsed.assignmentId
+      },
       { addQueryPrefix: true });
   }
 
