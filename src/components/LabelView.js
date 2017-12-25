@@ -25,8 +25,7 @@ class LabelView extends Component {
 
     // create axios instance for API calls
     this.backend = axios.create({
-      baseURL: config["server"][process.env.NODE_ENV] + '/boxes',
-      timeout: 1000
+      baseURL: config["server"][process.env.NODE_ENV] + '/boxes'
     });
 
     // initialize state
