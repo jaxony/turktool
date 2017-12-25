@@ -35,7 +35,7 @@ export default class SubmitButton extends Component {
 
   normalizePosition(position) {
     const { top, left, width, height } = position;
-    console.log(top, left, width, height);
+    // console.log(top, left, width, height);
     const normalizedPosition = {
       top: top / this.props.imageHeight,
       left: left / this.props.imageWidth,
@@ -46,6 +46,7 @@ export default class SubmitButton extends Component {
     for (var key in normalizedPosition) {
       normalizedPosition[key] = normalizedPosition[key].toFixed(2);
     }
+    // console.log(normalizedPosition);
     return normalizedPosition;
   }
 
@@ -96,7 +97,7 @@ export default class SubmitButton extends Component {
 
     return (
       <div id="Submit">
-        <form type="submit" method="POST" action={this.getSubmissionUrl()}>
+        <form type="submit" method="POST" action={submissionUrl}>
           {inputElement}
         </form>
       </div>
