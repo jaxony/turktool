@@ -1,11 +1,6 @@
-import React, { Component } from "react";
 import { connect } from "react-redux";
 import SubmitButton from "../components/SubmitButton.js";
-import axios from "axios";
 import { withRouter } from "react-router-dom";
-
-var config = require("../config.json");
-var env = process.env.NODE_ENV;
 
 const mapStateToProps = (state, ownProps) => {
   const committedBoxes = state.committedBoxes.present;

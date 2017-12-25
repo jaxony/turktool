@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import BoundingBox from "./BoundingBox.js";
 import BoundingBoxes from "./BoundingBoxes.js";
-import SubmitButton from "../components/SubmitButton.js";
 import Crosshair from "../components/Crosshair.js";
 import { setImageProps } from "../actions";
 import { calculateRectPosition } from "../utils/drawing";
@@ -94,7 +92,7 @@ class LabelView extends Component {
   calculateOffset() {
     // from react-cursor-position
     // https://github.com/ethanselzer/react-cursor-position/blob/master/src/ReactCursorPosition.js
-    const { x, y, w, h } = this.getDocumentRelativeElementOffset(this.el);
+    const { x, y } = this.getDocumentRelativeElementOffset(this.el);
     return { offsetX: x, offsetY: y };
   }
 

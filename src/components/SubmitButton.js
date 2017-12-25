@@ -65,17 +65,18 @@ export default class SubmitButton extends Component {
   }
 
   createInputElement() {
+    var value, inputElement;
     if (this.hasAcceptedTask()) {
       if (this.props.hasDrawnBox) {
-        var value = "Submit";
-        var inputElement = <input type="submit" id="submitButton" value={value} />;
+        value = "Submit";
+        inputElement = <input type="submit" id="submitButton" value={value} />;
       } else {
-        var value = "Draw a box first!"
-        var inputElement = <input type="submit" id="submitButton" value={value} disabled />
+        value = "Draw a box first!"
+        inputElement = <input type="submit" id="submitButton" value={value} disabled />
       }
     } else {
-      var value = "You must ACCEPT the HIT before you can submit the results.";
-      var inputElement = <input type="submit" id="submitButton" value={value} disabled />;
+      value = "You must ACCEPT the HIT before you can submit the results.";
+      inputElement = <input type="submit" id="submitButton" value={value} disabled />;
     }
     return inputElement;
   }
