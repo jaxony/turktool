@@ -133,6 +133,7 @@ class LabelView extends Component {
           <BoundingBoxes
             className="BoundingBoxes unselectable"
             boxes={boxesToRender}
+            isDrawing={this.props.isDrawing}
           />
         )}
         <div>
@@ -155,7 +156,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     committedBoxes: state.committedBoxes.present,
     currentBox: state.currentBox,
-    imageProps: state.imageProps
+    imageProps: state.imageProps,
+    isDrawing: state.currentBox.isDrawing
   };
 };
 

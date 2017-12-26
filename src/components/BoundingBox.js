@@ -13,7 +13,11 @@ export default class BoundingBox extends Component {
   }
 
   mouseOverHandler() {
-    this.setState({ mouseOver: true });
+    if (!this.state.mouseOver && !this.props.isDrawing) {
+      setTimeout(() => {
+        this.setState({ mouseOver: true });
+      }, 200);
+    }
   }
 
   mouseLeaveHandler() {
@@ -21,7 +25,6 @@ export default class BoundingBox extends Component {
   }
 
   render() {
-    // console.log(this.props.box.position);
     return (
       <div
         className="BoundingBox"
