@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import BoundingBoxes from "./BoundingBoxes";
 import ImageContainer from "../containers/ImageContainer";
-import Crosshair from "../components/Crosshair.js";
+import Crosshair from "../components/Crosshair";
+import InfoPanel from "../components/InfoPanel";
 import { calculateRectPosition, isRectangleTooSmall } from "../utils/drawing";
 
 /**
@@ -174,22 +175,26 @@ class LabelView extends Component {
         onMouseUp={this.mouseUpHandler}
         onMouseMove={this.mouseMoveHandler}
       >
-        <div id="LabelView">
-          {this.isCrosshairReady() &&
-            <Crosshair
-              x={this.state.currX}
-              y={this.state.currY}
-              imageProps={this.props.imageProps}
-            />
-          }
-          {boxesToRender.length > 0 && (
-            <BoundingBoxes
-              className="BoundingBoxes unselectable"
-              boxes={boxesToRender}
-              isDrawing={this.state.isDrawing}
-            />
-          )}
-          <ImageContainer taskId={this.props.taskId} />
+        <div id="Middle">
+          <div id="LabelView">
+            {this.isCrosshairReady() &&
+              <Crosshair
+                x={this.state.currX}
+                y={this.state.currY}
+                imageProps={this.props.imageProps}
+              />
+            }
+            {boxesToRender.length > 0 && (
+              <BoundingBoxes
+                className="BoundingBoxes unselectable"
+                boxes={boxesToRender}
+                isDrawing={this.state.isDrawing}
+              />
+            )}
+            <ImageContainer taskId={this.props.taskId} />
+          </div>
+          <InfoPanel />
+          <div style={{clear: "both"}} />
         </div>
       </div>
     );

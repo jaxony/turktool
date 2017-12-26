@@ -35,7 +35,16 @@ html, body {
   padding-bottom: 20px;
 }
 
+#Middle {
+  position: relative;
+  width: 750px;
+  height: auto;
+  margin: 0 auto;
+
+}
+
 #LabelView {
+  float: left;
   position: relative;
   cursor: crosshair;
   top: 15%;
@@ -43,6 +52,14 @@ html, body {
   width: 500px;
   height: auto;
   margin: 0 auto;
+}
+
+#InfoPanel {
+  float: right;
+  position: relative;
+  padding: 10px;
+  width: 230px;
+  height: 100%;
 }
 
 .BoundingBox {
@@ -123,6 +140,26 @@ html, body {
   height: 100%;
   /*background-color: rgba(0, 128, 0, 0.5);*/
   z-index: 3;
+}
+
+#InfoPanel table {
+  margin-left: 10px;
+}
+
+#InfoPanel td {
+  padding: 10px;
+}
+
+.KeyboardKey {
+  border: 2px solid #d1d4d6;
+  background-color: #dee0e2;
+  color: white;
+  font-size: 20px;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 40px;
+  height: 40px;
+  width: 40px;
 }
 
 #Submit {
