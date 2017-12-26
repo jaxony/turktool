@@ -32,7 +32,8 @@ class LabelView extends Component {
       currX: null,
       currY: null,
       imgLoaded: false,
-      imageUrl: null
+      imageUrl: null,
+      showCrosshair: true
     };
   }
 
@@ -61,6 +62,14 @@ class LabelView extends Component {
 
   handleKeyPress(event) {
     switch (event.keyCode) {
+      case 67:
+        console.log("You just pressed C!");
+        this.setState(prevState => {
+          return {
+            showCrosshair: !prevState.showCrosshair
+          }
+        });
+        break;
       case 90:
         console.log("You just pressed Z!");
         if (this.props.canUndo) this.props.onUndo();
@@ -178,7 +187,7 @@ class LabelView extends Component {
       >
         <div id="Middle">
           <div id="LabelView">
-            {this.isCrosshairReady() &&
+            {this.state.showCrosshair && this.isCrosshairReady() &&
               <Crosshair
                 x={this.state.currX}
                 y={this.state.currY}
