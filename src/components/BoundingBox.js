@@ -37,7 +37,10 @@ export default class BoundingBox extends Component {
         onMouseLeave={this.mouseLeaveHandler}
       >
         {this.state.mouseOver && (
-          <DeleteBoxButtonContainer boxId={this.props.box.id} />
+          <DeleteBoxButtonContainer
+            boxId={this.props.box.id}
+            isDrawing={this.props.isDrawing}
+          />
         )}
       </div>
     );

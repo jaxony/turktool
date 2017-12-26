@@ -5,8 +5,8 @@ import { deleteBox } from "../actions";
 const mapStateToProps = (state, ownProps) => {
   return {
     boxId: ownProps.boxId,
-    isDrawing: state.currentBox.isDrawing
-  }
+    isDrawing: ownProps.isDrawing
+  };
 };
 
 const mapDispatchToProps = dispatch => {
