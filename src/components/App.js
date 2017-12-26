@@ -15,7 +15,6 @@ class App extends Component {
       <div id="AppContainer">
         <Header />
         <LabelViewContainer taskId={this.props.match.params.taskId} />
-        <SubmitButtonContainer taskId={this.props.match.params.taskId}/>
       </div>
     );
   }

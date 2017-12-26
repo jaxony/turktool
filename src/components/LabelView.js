@@ -4,6 +4,7 @@ import ImageContainer from "../containers/ImageContainer";
 import Crosshair from "../components/Crosshair";
 import InfoPanel from "../components/InfoPanel";
 import { calculateRectPosition, isRectangleTooSmall } from "../utils/drawing";
+import SubmitButtonContainer from "../containers/SubmitButtonContainer";
 
 /**
  * `LabelView` is a container for `LabelImage` and
@@ -193,8 +194,10 @@ class LabelView extends Component {
             )}
             <ImageContainer taskId={this.props.taskId} />
           </div>
-          <InfoPanel />
-          <div style={{clear: "both"}} />
+          <div id="SidePanel">
+            <InfoPanel />
+            <SubmitButtonContainer taskId={this.props.taskId}/>
+          </div>
         </div>
       </div>
     );

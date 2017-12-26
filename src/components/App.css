@@ -54,14 +54,6 @@ html, body {
   margin: 0 auto;
 }
 
-#InfoPanel {
-  float: right;
-  position: relative;
-  padding: 10px;
-  width: 230px;
-  height: 100%;
-}
-
 .BoundingBox {
   cursor: crosshair;
   position: absolute;
@@ -142,6 +134,14 @@ html, body {
   z-index: 3;
 }
 
+#SidePanel {
+  float: right;
+  position: relative;
+  padding: 10px;
+  width: 230px;
+  height: 100%;
+}
+
 #InfoPanel table {
   margin-left: 10px;
 }
@@ -164,12 +164,12 @@ html, body {
 
 #Submit {
   position: relative;
-  top: 20px;
+  /*top: 20px;*/
 }
 
 #Submit form {
   text-align: center;
-  width: 100%;
+  /*width: 100%;*/
 }
 
 #submitButton {
@@ -178,12 +178,13 @@ html, body {
   background-color: #4CAF50; /* Green */
   border: none;
   color: white;
-  padding: 15px 32px;
+  /*padding: 15px 32px;*/
+  height: 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  width: 500px;
+  width: 190px;
 }
 
 #submitButton:hover {
