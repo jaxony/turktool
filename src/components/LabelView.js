@@ -149,20 +149,22 @@ class LabelView extends Component {
     }
 
     return (
-      <div
-        id="LabelView"
-        onMouseDown={this.mouseDownHandler}
-        onMouseUp={this.mouseUpHandler}
-        onMouseMove={this.mouseMoveHandler}
-      >
-        {boxesToRender.length > 0 && (
-          <BoundingBoxes
-            className="BoundingBoxes unselectable"
-            boxes={boxesToRender}
-            isDrawing={this.props.isDrawing}
-          />
-        )}
-        <ImageContainer />
+      <div id="LabelViewContainer">
+        <div
+          id="LabelView"
+          onMouseDown={this.mouseDownHandler}
+          onMouseUp={this.mouseUpHandler}
+          onMouseMove={this.mouseMoveHandler}
+        >
+          {boxesToRender.length > 0 && (
+            <BoundingBoxes
+              className="BoundingBoxes unselectable"
+              boxes={boxesToRender}
+              isDrawing={this.props.currentBox.isDrawing}
+            />
+          )}
+          <ImageContainer />
+        </div>
       </div>
     );
   }
