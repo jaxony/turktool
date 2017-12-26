@@ -170,13 +170,13 @@ class LabelView extends Component {
     }
 
     return (
-      <div id="LabelViewContainer">
-        <div
-          id="LabelView"
-          onMouseDown={this.mouseDownHandler}
-          onMouseUp={this.mouseUpHandler}
-          onMouseMove={this.mouseMoveHandler}
-        >
+      <div
+        id="LabelViewContainer"
+        onMouseDown={this.mouseDownHandler}
+        onMouseUp={this.mouseUpHandler}
+        onMouseMove={this.mouseMoveHandler}
+      >
+        <div id="LabelView">
           {boxesToRender.length > 0 && (
             <BoundingBoxes
               className="BoundingBoxes unselectable"
