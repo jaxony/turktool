@@ -11,7 +11,6 @@ import {
 
 const mapStateToProps = state => {
   return {
-    currentBox: state.currentBox,
     committedBoxes: state.committedBoxes.present,
     imageProps: state.imageProps,
     canUndo: state.committedBoxes.past.length > 0,
@@ -21,15 +20,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    startDrawing: drawing => {
-      dispatch(startDrawing(drawing));
-    },
-    updateDrawing: drawing => {
-      dispatch(updateDrawing(drawing));
-    },
-    refreshDrawing: () => {
-      dispatch(refreshDrawing());
-    },
     commitDrawingAsBox: (id, position) => {
       dispatch(addBox(id, position));
     },

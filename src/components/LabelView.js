@@ -24,14 +24,16 @@ class LabelView extends Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.createRectangle = this.createRectangle.bind(this);
     this.updateRectangle = this.updateRectangle.bind(this);
+    this.getCurrentBox = this.getCurrentBox.bind(this);
+    this.refreshDrawing = this.refreshDrawing.bind(this);
 
-    // create axios instance for API calls
-    this.backend = axios.create({
-      baseURL: config["server"][process.env.NODE_ENV] + "/boxes"
-    });
-
-    // initialize state
     this.state = {
+      isDrawing: false,
+      currentBoxId: 0,
+      startX: null,
+      startY: null,
+      currX: null,
+      currY: null,
       imgLoaded: false,
       imageUrl: null
     };
@@ -53,6 +55,15 @@ class LabelView extends Component {
     document.removeEventListener("keydown", this.handleKeyPress);
   }
 
+  getCurrentBox() {
+    return {
+      startX: this.state.startX,
+      startY: this.state.startY,
+      currX: this.state.currX,
+      currY: this.state.currY
+    };
+  }
+
   handleKeyPress(event) {
     switch (event.keyCode) {
       case 90:
@@ -69,22 +80,20 @@ class LabelView extends Component {
   }
 
   createRectangle(event) {
-    const payload = {
+    this.setState({
       isDrawing: true,
       startX: event.pageX,
       startY: event.pageY,
       currX: event.pageX,
       currY: event.pageY
-    };
-    this.props.startDrawing(payload);
+    });
   }
 
   updateRectangle(event) {
-    const payload = {
+    this.setState({
       currX: event.pageX,
       currY: event.pageY
-    };
-    this.props.updateDrawing(payload);
+    })
   }
 
   mouseDownHandler(event) {
@@ -103,7 +112,7 @@ class LabelView extends Component {
   mouseMoveHandler(event) {
     // console.log("move");
     // only update the state if is drawing
-    if (!this.props.currentBox.isDrawing) return;
+    if (!this.state.isDrawing) return;
 
     event.persist();
     this.updateRectangle(event);
@@ -114,20 +123,40 @@ class LabelView extends Component {
     // console.log("up");
     const boxPosition = calculateRectPosition(
       this.props.imageProps,
-      this.props.currentBox
+      this.getCurrentBox()
     );
-    if (this.props.currentBox.isDrawing && !isRectangleTooSmall(boxPosition)) {
+    if (this.state.isDrawing && !isRectangleTooSmall(boxPosition)) {
       // drawing has ended, and coord is not null,
       // so this rectangle can be committed permanently
       // this.props.onCommitBox(newBox.id, newBox.position);
       this.props.commitDrawingAsBox(
-        this.props.currentBox.currentBoxId,
+        this.state.currentBoxId,
         boxPosition
       );
       // this.committedBoxes.push(newBox);
     }
-    this.props.refreshDrawing();
+    this.refreshDrawing();
   }
+
+  refreshDrawing() {
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        isDrawing: false,
+        currentBoxId: prevState.isDrawing
+          ? prevState.currentBoxId + 1
+          : prevState.currentBoxId,
+        startX: null,
+        startY: null,
+        currX: null,
+        currY: null
+      }
+    });
+  }
+
+  // currentBoxId: state.isDrawing
+  //         ? state.currentBoxId + 1
+  //         : state.currentBoxId,
 
   render() {
     // console.log("re-render LabelView");
@@ -138,12 +167,12 @@ class LabelView extends Component {
       return result;
     }, []);
 
-    if (this.props.currentBox.startX != null) {
+    if (this.state.startX != null) {
       boxesToRender.push({
-        id: this.props.currentBox.currentBoxId,
+        id: this.state.currentBoxId,
         position: calculateRectPosition(
           this.props.imageProps,
-          this.props.currentBox
+          this.getCurrentBox()
         )
       });
     }
@@ -160,7 +189,7 @@ class LabelView extends Component {
             <BoundingBoxes
               className="BoundingBoxes unselectable"
               boxes={boxesToRender}
-              isDrawing={this.props.currentBox.isDrawing}
+              isDrawing={this.state.isDrawing}
             />
           )}
           <ImageContainer />
