@@ -17,7 +17,7 @@ export default class BoundingBox extends Component {
     if (!this.state.mouseOver && !this.props.isDrawing) {
       this.timer = setTimeout(() => {
         this.setState({ mouseOver: true });
-      }, 200);
+      }, 100);
     }
   }
 
