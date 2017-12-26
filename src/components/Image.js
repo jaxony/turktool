@@ -9,8 +9,21 @@ export default class Image extends Component {
     this.props = props;
     this.onImgLoad = this.onImgLoad.bind(this);
     this.setDimensions = this.setDimensions.bind(this);
-    this.state = {
-      image: require("../cat.jpg")
+    this.loadImageUrl = this.loadImageUrl.bind(this);
+    
+    if (config["server"] === null) {
+      this.state = {
+        image: require("../cat.jpg")
+      }
+    } else {
+      // create axios instance for API calls
+      this.backend = axios.create({
+        baseURL: config["server"][process.env.NODE_ENV] + "/boxes"
+      });
+
+      this.state = {
+        image: null
+      }
     }
   }
 
@@ -19,6 +32,8 @@ export default class Image extends Component {
    */
   componentDidMount() {
     window.addEventListener("resize", this.setDimensions);
+    if (config["server"] !== null)
+      this.loadImageUrl();
   }
 
   /**
@@ -27,6 +42,22 @@ export default class Image extends Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.setDimensions);
   }
+
+  loadImageUrl() {
+    const parsed = queryString.parse(this.props.location.search);
+    this.backend.get(`/${this.props.taskId}?hitId=${parsed.hitId}&workerId=${parsed.workerId}&assignmentId=${parsed.assignmentId}`)
+      .then(res => {
+        console.log(res);
+        const image = res.data.imageUrl;
+        this.setState({
+          image: image
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
+
 
   getDocumentRelativeElementOffset(el) {
     const rootEl = this.getRootOfEl(el);
