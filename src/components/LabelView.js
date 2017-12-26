@@ -17,15 +17,12 @@ class LabelView extends Component {
     this.mouseMoveHandler = this.mouseMoveHandler.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.createRectangle = this.createRectangle.bind(this);
-    this.updateRectangle = this.updateRectangle.bind(this);
+    this.updateCursorPosition = this.updateCursorPosition.bind(this);
     this.getCurrentBox = this.getCurrentBox.bind(this);
     this.refreshDrawing = this.refreshDrawing.bind(this);
-    this.updateCursorPosition = this.updateCursorPosition.bind(this);
     this.isCrosshairReady = this.isCrosshairReady.bind(this);
 
     this.state = {
-      cursorX: null,
-      cursorY: null,
       isDrawing: false,
       currentBoxId: 0,
       startX: null,
@@ -87,17 +84,10 @@ class LabelView extends Component {
     });
   }
 
-  updateRectangle(event) {
+  updateCursorPosition(event) {
     this.setState({
       currX: event.pageX,
       currY: event.pageY
-    });
-  }
-
-  updateCursorPosition(event) {
-    this.setState({
-      cursorX: event.pageX,
-      cursorY: event.pageY
     });
   }
 
@@ -121,11 +111,7 @@ class LabelView extends Component {
     // console.log("move");
     // only update the state if is drawing
     event.persist();
-    if (this.state.isDrawing) {
-      this.updateRectangle(event);
-    } else {
-      this.updateCursorPosition(event);
-    }
+    this.updateCursorPosition(event);
   }
 
   mouseUpHandler(event) {
@@ -160,8 +146,8 @@ class LabelView extends Component {
   }
 
   isCrosshairReady() {
-    return this.state.cursorX &&
-      this.state.cursorY &&
+    return this.state.currX &&
+      this.state.currY &&
       this.props.imageProps.height &&
       this.props.imageProps.width;
   }
@@ -199,8 +185,8 @@ class LabelView extends Component {
         <div id="LabelView">
           {this.isCrosshairReady() &&
             <Crosshair
-              x={this.state.cursorX}
-              y={this.state.cursorY}
+              x={this.state.currX}
+              y={this.state.currY}
               imageProps={this.props.imageProps}
             />
           }
