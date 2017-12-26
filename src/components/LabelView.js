@@ -148,10 +148,6 @@ class LabelView extends Component {
       this.props.imageProps.width;
   }
 
-  // currentBoxId: state.isDrawing
-  //         ? state.currentBoxId + 1
-  //         : state.currentBoxId,
-
   render() {
     // console.log("re-render LabelView");
     // TODO: get committed rectangles from Redux store
