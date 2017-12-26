@@ -4,6 +4,7 @@ import BoundingBox from "./BoundingBox.js";
 /**
  * Presentational component:
  * Renders `BoundingBox`s passed in through props.
+ * Renders `BoundingBox`s passed in through props.
  */
 export default class BoundingBoxes extends Component {
   constructor(props) {
