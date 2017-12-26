@@ -198,6 +198,7 @@ class LabelView extends Component {
             <InfoPanel />
             <SubmitButtonContainer taskId={this.props.taskId}/>
           </div>
+          <div style={{clear: "both"}} />
         </div>
       </div>
     );

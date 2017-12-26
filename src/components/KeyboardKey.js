@@ -8,7 +8,7 @@ export default class KeyboardKey extends Component {
 
   render() {
     return (
-      <div class="KeyboardKey">
+      <div className="KeyboardKey">
         {this.props.symbol}
       </div>
     );

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import Header from "./Header.js";
-import LabelViewContainer from "../containers/LabelViewContainer.js";
-import SubmitButtonContainer from "../containers/SubmitButtonContainer.js";
+import Header from "./Header";
+import LabelViewContainer from "../containers/LabelViewContainer";
 import "./App.css";
 
 class App extends Component {
