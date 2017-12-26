@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import './index.css';
-import App from './components/App';
-import turktoolApp from './reducers';
-import registerServiceWorker from './registerServiceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import "./index.css";
+import App from "./components/App";
+import turktoolApp from "./reducers";
+import registerServiceWorker from "./registerServiceWorker";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import config from "./config";
 
@@ -20,7 +20,7 @@ ReactDOM.render(
       />
     </Router>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 registerServiceWorker();
