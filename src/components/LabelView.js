@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import BoundingBoxes from "./BoundingBoxes";
 import ImageContainer from "../containers/ImageContainer";
 import Crosshair from "../components/Crosshair.js";
-import { setImageProps } from "../actions";
 import { calculateRectPosition, isRectangleTooSmall } from "../utils/drawing";
-import axios from "axios";
-import { withRouter } from "react-router-dom";
-const config = require("../config");
-const queryString = require("query-string");
 
 /**
  * `LabelView` is a container for `LabelImage` and

@@ -1,13 +1,7 @@
-import React, { Component } from "react";
 import { connect } from "react-redux";
-import { ActionCreators as UndoActionCreators } from 'redux-undo'
+import { ActionCreators as UndoActionCreators } from "redux-undo";
 import LabelView from "../components/LabelView";
-import {
-  startDrawing,
-  updateDrawing,
-  refreshDrawing,
-  addBox
-} from "../actions";
+import { addBox } from "../actions";
 
 const mapStateToProps = state => {
   return {
