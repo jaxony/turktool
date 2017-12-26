@@ -136,6 +136,7 @@ class LabelView extends Component {
             isDrawing={this.props.isDrawing}
           />
         )}
+        <Crosshair />
         <div>
           <img
             id="LabelViewImg"
@@ -145,7 +146,6 @@ class LabelView extends Component {
             onLoad={this.onImgLoad}
             ref={el => (this.el = el)}
           />
-          {/*<Crosshair />*/}
         </div>
       </div>
     );

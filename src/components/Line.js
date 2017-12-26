@@ -7,19 +7,6 @@ export default class Line extends Component {
   }
 
   render() {
-    var style = {
-      top: 50,
-      left: 100,
-      width: this.props.lineType === "vertical"
-        ? 0 : 750,
-      height: this.props.lineType === "vertical"
-        ? 500 : 0,
-      "border-top": "1px green",
-      "border-left": "1px green"
-    };
-
-    return (
-      <div class="line" style={style} />
-    );
+    return <div></div>;
   }
 }

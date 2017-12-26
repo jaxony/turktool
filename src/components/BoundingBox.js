@@ -22,7 +22,9 @@ export default class BoundingBox extends Component {
   }
 
   mouseLeaveHandler() {
-    if (this.timer !== null) { clearTimeout(this.timer); }
+    if (this.timer !== null) {
+      clearTimeout(this.timer);
+    }
     this.setState({ mouseOver: false });
   }
 
@@ -34,7 +36,9 @@ export default class BoundingBox extends Component {
         onMouseOver={this.mouseOverHandler}
         onMouseLeave={this.mouseLeaveHandler}
       >
-        {this.state.mouseOver && <DeleteBoxButtonContainer boxId={this.props.box.id} />}
+        {this.state.mouseOver && (
+          <DeleteBoxButtonContainer boxId={this.props.box.id} />
+        )}
       </div>
     );
   }

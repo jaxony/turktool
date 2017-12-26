@@ -100,6 +100,12 @@ html, body {
   color: #232426;
 }
 
+#Crosshair {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 #Submit {
   position: relative;
   top: 20px;
