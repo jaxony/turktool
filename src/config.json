@@ -4,7 +4,7 @@
     "development": "https://workersandbox.mturk.com/mturk/externalSubmit"
   },
   "server": {
-    "production": "https://chessm8-mturk.herokuapp.com",
-    "development": "https://chessm8-mturk.herokuapp.com"
+    "production": null,
+    "development": null
   }
 }
