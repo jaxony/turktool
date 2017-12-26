@@ -136,9 +136,7 @@ class LabelView extends Component {
           ? prevState.currentBoxId + 1
           : prevState.currentBoxId,
         startX: null,
-        startY: null,
-        currX: null,
-        currY: null
+        startY: null
       };
     });
   }
