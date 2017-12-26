@@ -87,7 +87,7 @@ class LabelView extends Component {
     this.setState({
       currX: event.pageX,
       currY: event.pageY
-    })
+    });
   }
 
   mouseDownHandler(event) {
@@ -122,16 +122,13 @@ class LabelView extends Component {
     if (this.state.isDrawing && !isRectangleTooSmall(boxPosition)) {
       // drawing has ended, and coord is not null,
       // so this rectangle can be committed permanently
-      this.props.commitDrawingAsBox(
-        this.state.currentBoxId,
-        boxPosition
-      );
+      this.props.commitDrawingAsBox(this.state.currentBoxId, boxPosition);
     }
     this.refreshDrawing();
   }
 
   refreshDrawing() {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
         ...prevState,
         isDrawing: false,
@@ -142,7 +139,7 @@ class LabelView extends Component {
         startY: null,
         currX: null,
         currY: null
-      }
+      };
     });
   }
 
@@ -184,7 +181,7 @@ class LabelView extends Component {
               isDrawing={this.state.isDrawing}
             />
           )}
-          <ImageContainer taskId={this.props.taskId}/>
+          <ImageContainer taskId={this.props.taskId} />
         </div>
       </div>
     );
