@@ -71,6 +71,7 @@ html, body {
 }
 
 #LabelViewImg {
+  display: block;
   cursor: crosshair;
   position: relative;
   width: 100%;
