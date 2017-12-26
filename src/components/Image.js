@@ -8,6 +8,20 @@ export default class Image extends Component {
     this.setDimensions = this.setDimensions.bind(this);
   }
 
+   /**
+   * Add event listener
+   */
+  componentDidMount() {
+    window.addEventListener("resize", this.setDimensions);
+  }
+
+  /**
+   * Remove event listener
+   */
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.setDimensions);
+  }
+
   getDocumentRelativeElementOffset(el) {
     const rootEl = this.getRootOfEl(el);
     const { left: docLeft, top: docTop } = rootEl.getBoundingClientRect();
