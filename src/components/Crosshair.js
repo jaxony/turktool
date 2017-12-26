@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import Line from "./Line.js";
+import VerticalLine from "./VerticalLine";
+import HorizontalLine from "./HorizontalLine";
 
 export default class Crosshair extends Component {
   constructor(props) {
@@ -10,12 +11,14 @@ export default class Crosshair extends Component {
   }
 
   mouseMoveHandler() {
-    console.log('move');
+    // console.log('move');
   }
 
   mouseOverHandler() {
-    console.log('over');
+    // console.log('over');
   }
+
+ 
 
   render() {
     return (
@@ -25,8 +28,8 @@ export default class Crosshair extends Component {
         onMouseOver={this.mouseOverHandler}
         onMouseMove={this.mouseMoveHandler}
       >
-        <Line lineType="vertical" />
-        <Line lineType="horizontal" />
+        <VerticalLine x={this.props.x} imageProps={this.props.imageProps} />
+        <HorizontalLine y={this.props.y} imageProps={this.props.imageProps} />
       </div>
     );
   }

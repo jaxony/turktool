@@ -20,8 +20,12 @@ class LabelView extends Component {
     this.updateRectangle = this.updateRectangle.bind(this);
     this.getCurrentBox = this.getCurrentBox.bind(this);
     this.refreshDrawing = this.refreshDrawing.bind(this);
+    this.updateCursorPosition = this.updateCursorPosition.bind(this);
+    this.isCrosshairReady = this.isCrosshairReady.bind(this);
 
     this.state = {
+      cursorX: null,
+      cursorY: null,
       isDrawing: false,
       currentBoxId: 0,
       startX: null,
@@ -90,13 +94,23 @@ class LabelView extends Component {
     });
   }
 
+  updateCursorPosition(event) {
+    this.setState({
+      cursorX: event.pageX,
+      cursorY: event.pageY
+    });
+  }
+
   mouseDownHandler(event) {
     // console.log("down");
     // only start drawing if the mouse was pressed
     // down inside the image that we want labelled
+    console.log(event.target.className);
     if (
+      event.target.className !== "line" &&
       event.target.id !== "LabelViewImg" &&
-      event.target.className !== "BoundingBox"
+      event.target.className !== "BoundingBox" &&
+      event.target.id !== "Crosshair"
     )
       return;
     event.persist();
@@ -106,10 +120,12 @@ class LabelView extends Component {
   mouseMoveHandler(event) {
     // console.log("move");
     // only update the state if is drawing
-    if (!this.state.isDrawing) return;
-
     event.persist();
-    this.updateRectangle(event);
+    if (this.state.isDrawing) {
+      this.updateRectangle(event);
+    } else {
+      this.updateCursorPosition(event);
+    }
   }
 
   mouseUpHandler(event) {
@@ -143,6 +159,13 @@ class LabelView extends Component {
     });
   }
 
+  isCrosshairReady() {
+    return this.state.cursorX &&
+      this.state.cursorY &&
+      this.props.imageProps.height &&
+      this.props.imageProps.width;
+  }
+
   // currentBoxId: state.isDrawing
   //         ? state.currentBoxId + 1
   //         : state.currentBoxId,
@@ -174,6 +197,13 @@ class LabelView extends Component {
         onMouseMove={this.mouseMoveHandler}
       >
         <div id="LabelView">
+          {this.isCrosshairReady() &&
+            <Crosshair
+              x={this.state.cursorX}
+              y={this.state.cursorY}
+              imageProps={this.props.imageProps}
+            />
+          }
           {boxesToRender.length > 0 && (
             <BoundingBoxes
               className="BoundingBoxes unselectable"

@@ -7,6 +7,19 @@ html, body {
   height: 100%;
 }
 
+.line {
+  position: absolute;
+  z-index: 2;
+}
+
+#verticalLine {
+  border-left: 2px dotted rgba(255, 255, 255, 0.5);
+}
+
+#horizontalLine {
+  border-bottom: 2px dotted rgba(255, 255, 255, 0.5);
+}
+
 #AppContainer {
   position: relative;
   width: 100%;
@@ -33,7 +46,7 @@ html, body {
 .BoundingBox {
   position: absolute;
   border: 2px solid rgba(255, 51, 0, 0.8);
-  z-index: 999;
+  z-index: 4;
 }
 
 .DeleteBoxButton {
@@ -50,7 +63,7 @@ html, body {
   background-color: grey;
   border-radius: 7px;
   border: 2px solid white;
-  z-index: 10000;
+  z-index: 5;
 }
 
 .unselectable {
@@ -105,6 +118,8 @@ html, body {
   position: absolute;
   width: 100%;
   height: 100%;
+  background-color: rgba(0, 128, 0, 0.5);
+  z-index: 3;
 }
 
 #Submit {
@@ -129,7 +144,6 @@ html, body {
   display: inline-block;
   font-size: 16px;
   width: 500px;
-  z-index: 10000;
 }
 
 #submitButton:hover {
