@@ -128,12 +128,10 @@ class LabelView extends Component {
     if (this.state.isDrawing && !isRectangleTooSmall(boxPosition)) {
       // drawing has ended, and coord is not null,
       // so this rectangle can be committed permanently
-      // this.props.onCommitBox(newBox.id, newBox.position);
       this.props.commitDrawingAsBox(
         this.state.currentBoxId,
         boxPosition
       );
-      // this.committedBoxes.push(newBox);
     }
     this.refreshDrawing();
   }
