@@ -38,7 +38,6 @@ class LabelView extends Component {
    * Add event listener
    */
   componentDidMount() {
-    window.addEventListener("resize", this.setDimensions);
     document.addEventListener("keydown", this.handleKeyPress);
   }
 
@@ -46,7 +45,6 @@ class LabelView extends Component {
    * Remove event listener
    */
   componentWillUnmount() {
-    window.removeEventListener("resize", this.setDimensions);
     document.removeEventListener("keydown", this.handleKeyPress);
   }
 
