@@ -184,7 +184,7 @@ class LabelView extends Component {
               isDrawing={this.state.isDrawing}
             />
           )}
-          <ImageContainer />
+          <ImageContainer taskId={this.props.taskId}/>
         </div>
       </div>
     );

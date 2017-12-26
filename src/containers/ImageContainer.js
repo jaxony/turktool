@@ -1,9 +1,12 @@
 import { connect } from "react-redux";
 import Image from "../components/Image.js";
 import { setImageProps } from "../actions";
+import { withRouter } from "react-router-dom";
 
 const mapStateToProps = (state, ownProps) => {
-  return {};
+  return {
+    taskId: ownProps.taskId
+  };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -14,6 +17,6 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const ImageContainer = connect(mapStateToProps, mapDispatchToProps)(Image);
+const ImageContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(Image));
 
 export default ImageContainer;

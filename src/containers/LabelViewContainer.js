@@ -3,12 +3,13 @@ import { ActionCreators as UndoActionCreators } from "redux-undo";
 import LabelView from "../components/LabelView";
 import { addBox } from "../actions";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
     committedBoxes: state.committedBoxes.present,
     imageProps: state.imageProps,
     canUndo: state.committedBoxes.past.length > 0,
-    canRedo: state.committedBoxes.future.length > 0
+    canRedo: state.committedBoxes.future.length > 0,
+    taskId: ownProps.taskId
   };
 };
 
