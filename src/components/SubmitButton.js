@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from "axios";
 var env = process.env.NODE_ENV;
 var config = require("../config.json");
-const queryString = require('query-string');
-var qs = require('qs');
+const queryString = require("query-string");
+var qs = require("qs");
 
 export default class SubmitButton extends Component {
   constructor(props) {
@@ -11,6 +11,7 @@ export default class SubmitButton extends Component {
     this.props = props;
     this.submitTask = this.submitTask.bind(this);
     this.getSubmissionUrl = this.getSubmissionUrl.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.getNormalizedBoxes = this.getNormalizedBoxes.bind(this);
     this.normalizePosition = this.normalizePosition.bind(this);
     this.parsed = queryString.parse(this.props.location.search);
@@ -50,13 +51,21 @@ export default class SubmitButton extends Component {
     return normalizedPosition;
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    const input = document.getElementById('submitButton');
+    input.setAttribute('value', JSON.stringify(this.getNormalizedBoxes()));
+    console.log(input);
+    const form = document.getElementById('submitForm');
+    HTMLFormElement.prototype.submit.call(form);
+    
+  }
+
   submitTask(e) {
     // e.preventDefault();
-    console.log('POSTing data');
+    console.log("POSTing data");
     axios
-      .post(`${this.getSubmissionUrl()}`, {
- 
-      })
+      .post(`${this.getSubmissionUrl()}`, {})
       .then(function(response) {
         console.log(response);
       })
@@ -66,38 +75,59 @@ export default class SubmitButton extends Component {
   }
 
   createInputElement() {
-    var value, inputElement;
     if (this.hasAcceptedTask()) {
-      if (this.props.hasDrawnBox) {
-        value = "Submit";
-        inputElement = <input type="submit" id="submitButton" value={value} />;
-      } else {
-        value = "Draw a box first!"
-        inputElement = <input type="submit" id="submitButton" value={value} disabled />
-      }
+      if (this.props.hasDrawnBox)
+        return (
+          <button
+            name="submit"
+            type="submit"
+            id="submitButton"
+            value="Submit"
+            ref={value => {
+              this.value = value;
+            }}
+          />
+        );
+      else
+        return (
+          <button
+            name="submit"
+            type="submit"
+            id="submitButton"
+            value="Draw a box first!"
+            disabled
+          />
+        );
     } else {
-      value = "You must ACCEPT the HIT before you can submit the results.";
-      inputElement = <input type="submit" id="submitButton" value={value} disabled />;
+      return (
+        <button
+          name="submit"
+          type="submit"
+          id="submitButton"
+          value="Cannot Submit! Accept HIT."
+          disabled
+        />
+      );
     }
-    return inputElement;
   }
 
   getSubmissionUrl() {
-    return config["submit"][env] + qs.stringify(
-      {
-        boundingBoxes: this.getNormalizedBoxes(),
-        assignmentId: this.parsed.assignmentId
-      },
-      { addQueryPrefix: true });
+    return config["submit"][env] + "/?assignmentId=" + this.parsed.assignmentId;
   }
 
   render() {
-    const submissionUrl = this.getSubmissionUrl();
     const inputElement = this.createInputElement();
 
     return (
       <div id="Submit">
-        <form type="submit" method="POST" action={submissionUrl}>
+        <form
+          id="submitForm"
+          type="submit"
+          method="POST"
+          action={this.getSubmissionUrl()}
+          onSubmit={this.handleSubmit}
+          ref={(form) => { this.form = form }}
+        >
           {inputElement}
         </form>
       </div>
