@@ -18,6 +18,8 @@ export default class SubmitButton extends Component {
   }
 
   hasAcceptedTask() {
+    if (this.parsed.assignmentId === undefined)
+      return false;
     return this.parsed.assignmentId !== "ASSIGNMENT_ID_NOT_AVAILABLE";
   }
 
@@ -82,11 +84,10 @@ export default class SubmitButton extends Component {
             name="submit"
             type="submit"
             id="submitButton"
-            value="Submit"
             ref={value => {
               this.value = value;
             }}
-          />
+          >Submit</button>
         );
       else
         return (
@@ -94,9 +95,8 @@ export default class SubmitButton extends Component {
             name="submit"
             type="submit"
             id="submitButton"
-            value="Draw a box first!"
             disabled
-          />
+          >Draw a box first!</button>
         );
     } else {
       return (
@@ -104,9 +104,8 @@ export default class SubmitButton extends Component {
           name="submit"
           type="submit"
           id="submitButton"
-          value="Cannot Submit! Accept HIT."
           disabled
-        />
+        >Cannot Submit! Accept HIT.</button>
       );
     }
   }
