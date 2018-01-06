@@ -84,6 +84,7 @@ export default class SubmitButton extends Component {
             name="boundingBoxes"
             type="submit"
             id="submitButton"
+            value={JSON.stringify(this.getNormalizedBoxes())}
             ref={value => {
               this.value = value;
             }}
@@ -126,8 +127,6 @@ export default class SubmitButton extends Component {
           type="submit"
           method="POST"
           action={this.getSubmissionUrl()}
-          onSubmit={this.handleSubmit}
-          ref={(form) => { this.form = form }}
         >
           {inputElement}
         </form>
