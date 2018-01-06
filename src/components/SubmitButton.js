@@ -81,7 +81,7 @@ export default class SubmitButton extends Component {
       if (this.props.hasDrawnBox)
         return (
           <button
-            name="submit"
+            name="boundingBoxes"
             type="submit"
             id="submitButton"
             ref={value => {
@@ -92,7 +92,7 @@ export default class SubmitButton extends Component {
       else
         return (
           <button
-            name="submit"
+            name="boundingBoxes"
             type="submit"
             id="submitButton"
             disabled
@@ -101,7 +101,7 @@ export default class SubmitButton extends Component {
     } else {
       return (
         <button
-          name="submit"
+          name="boundingBoxes"
           type="submit"
           id="submitButton"
           disabled
@@ -111,7 +111,9 @@ export default class SubmitButton extends Component {
   }
 
   getSubmissionUrl() {
-    return config["submit"][env] + "/?assignmentId=" + this.parsed.assignmentId;
+    const url = config["submit"][env] + "/?assignmentId=" + this.parsed.assignmentId;
+    console.log(url);
+    return url;
   }
 
   render() {
