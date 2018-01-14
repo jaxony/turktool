@@ -3,9 +3,19 @@ import { ActionCreators as UndoActionCreators } from "redux-undo";
 import LabelView from "../components/LabelView";
 import { addBox } from "../actions";
 
+// convert JSON key-value pairs of boxes to Array
+const preprocess = boxes => {
+  return Object.keys(boxes).reduce((result, key) => {
+    result.push(boxes[key]);
+    return result;
+  }, []);
+};
+
 const mapStateToProps = (state, ownProps) => {
+  const committedBoxesArray = preprocess(state.committedBoxes.present);
+  console.log(committedBoxesArray);
   return {
-    committedBoxes: state.committedBoxes.present,
+    committedBoxes: committedBoxesArray,
     imageProps: state.imageProps,
     canUndo: state.committedBoxes.past.length > 0,
     canRedo: state.committedBoxes.future.length > 0,

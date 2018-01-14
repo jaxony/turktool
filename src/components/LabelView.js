@@ -162,11 +162,7 @@ class LabelView extends Component {
   render() {
     // console.log("re-render LabelView");
     // TODO: get committed rectangles from Redux store
-    const boxes = this.props.committedBoxes;
-    var boxesToRender = Object.keys(boxes).reduce((result, key) => {
-      result.push(boxes[key]);
-      return result;
-    }, []);
+    var boxesToRender = this.props.committedBoxes.slice(0);
 
     if (this.state.startX != null) {
       boxesToRender.push({
