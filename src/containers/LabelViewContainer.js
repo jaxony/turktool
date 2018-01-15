@@ -13,7 +13,7 @@ const preprocess = boxes => {
 
 const mapStateToProps = (state, ownProps) => {
   const committedBoxesArray = preprocess(state.committedBoxes.present);
-  console.log(committedBoxesArray);
+  // console.log(committedBoxesArray);
   return {
     committedBoxes: committedBoxesArray,
     imageURL: ownProps.imageURL,
