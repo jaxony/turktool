@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <div id="AppContainer">
         <Header />
-        <LabelViewContainer taskId={this.props.match.params.taskId} />
+        <LabelViewContainer imageURL={this.props.imageURL} />
       </div>
     );
   }

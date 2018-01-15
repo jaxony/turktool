@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import "./index.css";
-import App from "./components/App";
+import AppContainer from "./containers/AppContainer";
 import turktoolApp from "./reducers";
 import registerServiceWorker from "./registerServiceWorker";
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -16,7 +16,7 @@ ReactDOM.render(
     <Router>
       <Route
         path={config["server"] === null ? "/" : "/:taskId"}
-        component={App}
+        component={AppContainer}
       />
     </Router>
   </Provider>,

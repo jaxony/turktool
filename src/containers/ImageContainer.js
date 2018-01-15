@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    taskId: ownProps.taskId
+    imageURL: ownProps.imageURL
   };
 };
 

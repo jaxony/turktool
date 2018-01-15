@@ -197,7 +197,7 @@ class LabelView extends Component {
                 isDrawing={this.state.isDrawing}
               />
             )}
-            <ImageContainer taskId={this.props.taskId} />
+            <ImageContainer imageURL={this.props.imageURL} />
           </div>
           <div id="SidePanel">
             <InfoPanel />

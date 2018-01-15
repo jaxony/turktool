@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
-import config from "../config";
-import queryString from "qs";
 
 export default class Image extends Component {
   constructor(props) {
@@ -9,22 +6,6 @@ export default class Image extends Component {
     this.props = props;
     this.onImgLoad = this.onImgLoad.bind(this);
     this.setDimensions = this.setDimensions.bind(this);
-    this.loadImageUrl = this.loadImageUrl.bind(this);
-    
-    if (config["server"] === null) {
-      this.state = {
-        image: require("../cat.jpg")
-      }
-    } else {
-      // create axios instance for API calls
-      this.backend = axios.create({
-        baseURL: config["server"][process.env.NODE_ENV] + "/boxes"
-      });
-
-      this.state = {
-        image: null
-      }
-    }
   }
 
    /**
@@ -32,8 +13,6 @@ export default class Image extends Component {
    */
   componentDidMount() {
     window.addEventListener("resize", this.setDimensions);
-    if (config["server"] !== null)
-      this.loadImageUrl();
   }
 
   /**
@@ -42,22 +21,6 @@ export default class Image extends Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.setDimensions);
   }
-
-  loadImageUrl() {
-    const parsed = queryString.parse(this.props.location.search);
-    this.backend.get(`/${this.props.taskId}?hitId=${parsed.hitId}&workerId=${parsed.workerId}&assignmentId=${parsed.assignmentId}`)
-      .then(res => {
-        console.log(res);
-        const image = res.data.imageUrl;
-        this.setState({
-          image: image
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    }
-
 
   getDocumentRelativeElementOffset(el) {
     const rootEl = this.getRootOfEl(el);
@@ -109,7 +72,7 @@ export default class Image extends Component {
       <img
         id="LabelViewImg"
         className="unselectable"
-        src={this.state.image}
+        src={this.props.imageURL}
         alt=""
         onLoad={this.onImgLoad}
         ref={el => (this.el = el)}

@@ -16,6 +16,7 @@ const mapStateToProps = (state, ownProps) => {
   console.log(committedBoxesArray);
   return {
     committedBoxes: committedBoxesArray,
+    imageURL: ownProps.imageURL,
     imageProps: state.imageProps,
     canUndo: state.committedBoxes.past.length > 0,
     canRedo: state.committedBoxes.future.length > 0,
