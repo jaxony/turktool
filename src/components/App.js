@@ -11,7 +11,7 @@ class App extends Component {
 
   render() {
     return (
-      <div id="AppContainer">
+      <div id="App">
         <Header />
         <LabelViewContainer imageURL={this.props.imageURL} />
       </div>
