@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import SubmitButton from "../components/SubmitButton.js";
+import SubmitButton from "../components/SubmitButton";
 import { withRouter } from "react-router-dom";
 
 const mapStateToProps = (state, ownProps) => {
@@ -7,8 +7,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     hasDrawnBox: Object.keys(committedBoxes).length > 0,
     boundingBoxes: committedBoxes,
-    imageHeight: state.imageProps.height,
-    imageWidth: state.imageProps.width
+    imageHeight: state.turktool.imageProps.height,
+    imageWidth: state.turktool.imageProps.width
   };
 };
 

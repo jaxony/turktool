@@ -3,8 +3,10 @@ import committedBoxes from "./committedBoxes";
 import imageProps from "./imageProps";
 
 const turktoolApp = combineReducers({
-  committedBoxes: committedBoxes,
-  imageProps: imageProps
+  turktool: {
+    committedBoxes: committedBoxes,
+    imageProps: imageProps
+  }
 })
 
 export default turktoolApp;
