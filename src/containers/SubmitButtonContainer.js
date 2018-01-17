@@ -3,7 +3,7 @@ import SubmitButton from "../components/SubmitButton";
 import { withRouter } from "react-router-dom";
 
 const mapStateToProps = (state, ownProps) => {
-  const committedBoxes = state.committedBoxes.present;
+  const committedBoxes = state.turktool.committedBoxes.present;
   return {
     hasDrawnBox: Object.keys(committedBoxes).length > 0,
     boundingBoxes: committedBoxes,
