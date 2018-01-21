@@ -199,10 +199,12 @@ class LabelView extends Component {
             )}
             <ImageContainer imageURL={this.props.imageURL} />
           </div>
-          <div id="SidePanel">
-            <InfoPanel />
-            <SubmitButtonContainer />
-          </div>
+          {this.props.showSidePanel &&
+            <div id="SidePanel">
+              <InfoPanel />
+              <SubmitButtonContainer />
+            </div>
+          }
           <div style={{clear: "both"}} />
         </div>
       </div>
