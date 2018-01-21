@@ -2,8 +2,8 @@ import { connect } from "react-redux";
 import SubmitButton from "../components/SubmitButton";
 import { withRouter } from "react-router-dom";
 
-const mapStateToProps = (state, ownProps) => {
-  const committedBoxes = state.turktool.committedBoxes.present;
+const mapStateToProps = ({turktool: state}, ownProps) => {
+  const committedBoxes = state.committedBoxes.present;
   return {
     hasDrawnBox: Object.keys(committedBoxes).length > 0,
     boundingBoxes: committedBoxes,

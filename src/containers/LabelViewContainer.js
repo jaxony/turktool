@@ -11,16 +11,17 @@ const preprocess = boxes => {
   }, []);
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const committedBoxesArray = preprocess(state.turktool.committedBoxes.present);
+const mapStateToProps = ({turktool: state }, ownProps) => {
+  const committedBoxesArray = preprocess(state.committedBoxes.present);
   // console.log(committedBoxesArray);
   return {
     committedBoxes: committedBoxesArray,
     imageURL: ownProps.imageURL,
-    imageProps: state.turktool.imageProps,
-    canUndo: state.turktool.committedBoxes.past.length > 0,
-    canRedo: state.turktool.committedBoxes.future.length > 0,
-    taskId: ownProps.taskId
+    imageProps: state.imageProps,
+    canUndo: state.committedBoxes.past.length > 0,
+    canRedo: state.committedBoxes.future.length > 0,
+    taskId: ownProps.taskId,
+    showSidePanel: ownProps.showSidePanel
   };
 };
 
